@@ -120,6 +120,10 @@ class EnergyOrbitCard extends HTMLElement {
     this._solarMode = 'total';
   }
 
+  static get version() {
+    return "1.0.1";
+  }
+
   setConfig(config) {
     if (!config.grid_entity) throw new Error('Grid Entity required');
     this.config = {
