@@ -80,7 +80,7 @@ show_zendure_mode: true
 show_tempo: true
 
 # --- Display Options ---
-bidirectional_mode: symmetric             # symmetric | import_only | export_only
+bidirectional_mode: bidirectional         # bidirectional | normal
 initial_battery_mode: percent             # percent | power
 initial_solar_mode: total                 # total | detail
 enable_breathing: true
@@ -106,7 +106,7 @@ mobile_gauge_size: 160
 | `battery_capacity_wh` | `1920` | Total battery capacity in Wh (used for time-to-full/empty estimate). |
 | `grid_warning_threshold` | `6000` | Power (W) above which the grid orbit turns orange. |
 | `grid_alert_threshold` | `9000` | Power (W) above which the grid orbit turns red. |
-| `bidirectional_mode` | `symmetric` | `symmetric`, `import_only` or `export_only`. |
+| `bidirectional_mode` | `bidirectional` | `bidirectional` or `normal`. |
 | `initial_battery_mode` | `percent` | Default battery display: `percent` or `power`. Click on the card to toggle. |
 | `initial_solar_mode` | `total` | Default solar display: `total` or `detail`. Click on the card to toggle. |
 | `show_zendure_mode` | `true` | Show or hide the Zendure mode selector. |
