@@ -120,30 +120,30 @@ class EnergyOrbitCard extends HTMLElement {
       battery_entities: config.battery_entities || [],
       solar_entities: config.solar_entities || [],
       battery_power_entities: config.battery_power_entities || [],
-      battery_max: config.battery_max || 100,
-      solar_max: config.solar_max || 5000,
-      grid_max: config.grid_max || 6000,
-      battery_power_max: config.battery_power_max || 2400,
+      battery_max: this._sanitizeNumber(config.battery_max, 100),
+      solar_max: this._sanitizeNumber(config.solar_max, 5000),
+      grid_max: this._sanitizeNumber(config.grid_max, 6000),
+      battery_power_max: this._sanitizeNumber(config.battery_power_max, 2400),
       bidirectional_mode: (config.bidirectional_mode === 'import_only' || config.bidirectional_mode === 'export_only' || config.bidirectional_mode === 'normal') ? 'normal' : 'bidirectional',
       
       initial_battery_mode: config.initial_battery_mode || 'percent',
       initial_solar_mode: config.initial_solar_mode || 'total',
-      battery_capacity_wh: config.battery_capacity_wh || 1920,
-      grid_warning_threshold: config.grid_warning_threshold || 6000,
-      grid_alert_threshold: config.grid_alert_threshold || 9000,
+      battery_capacity_wh: this._sanitizeNumber(config.battery_capacity_wh, 1920),
+      grid_warning_threshold: this._sanitizeNumber(config.grid_warning_threshold, 6000),
+      grid_alert_threshold: this._sanitizeNumber(config.grid_alert_threshold, 9000),
       show_zendure_mode: config.show_zendure_mode !== false,
       show_tempo: config.show_tempo !== false,
-      gauge_opacity: config.gauge_opacity !== undefined ? config.gauge_opacity : 0.8,
+      gauge_opacity: this._sanitizeNumber(config.gauge_opacity !== undefined ? config.gauge_opacity : 0.8, 0.8),
       enable_breathing: config.enable_breathing !== false,
-      mobile_gauge_size: config.mobile_gauge_size || 160,
+      mobile_gauge_size: this._sanitizeNumber(config.mobile_gauge_size, 160),
       colors: {
-        grid_import: config.grid_import_color || config.colors?.grid_import || '#3498db',
-        grid_export: config.grid_export_color || config.colors?.grid_export || '#2ecc71',
-        solar: config.solar_color || config.colors?.solar || '#FFD700',
-        battery: config.battery_color || config.colors?.battery || '#FF6B35',
-        battery_charge: config.battery_charge_color || config.colors?.battery_charge || '#e74c3c',
-        battery_discharge: config.battery_discharge_color || config.colors?.battery_discharge || '#2ecc71',
-                      }
+        grid_import: this._sanitizeColor(config.grid_import_color || config.colors?.grid_import, '#3498db'),
+        grid_export: this._sanitizeColor(config.grid_export_color || config.colors?.grid_export, '#2ecc71'),
+        solar: this._sanitizeColor(config.solar_color || config.colors?.solar, '#FFD700'),
+        battery: this._sanitizeColor(config.battery_color || config.colors?.battery, '#FF6B35'),
+        battery_charge: this._sanitizeColor(config.battery_charge_color || config.colors?.battery_charge, '#e74c3c'),
+        battery_discharge: this._sanitizeColor(config.battery_discharge_color || config.colors?.battery_discharge, '#2ecc71'),
+      }
     };
     this._batteryMode = this.config.initial_battery_mode;
     this._solarMode = this.config.initial_solar_mode;
@@ -612,11 +612,26 @@ class EnergyOrbitCard extends HTMLElement {
             solDetCont.style.display = 'block'; 
             const ents = [...this.config.solar_entities];
             if(this.config.solar_entity) ents.push(this.config.solar_entity);
-            solDetCont.innerHTML = ents.map(e => {
+
+            solDetCont.innerHTML = '';
+            ents.forEach(e => {
                 let n = this._getEntityFriendlyName(e).replace(/(Solar|Production)/gi, '').trim();
                 if(n.length > 15) n = n.substring(0,15)+'.';
-                return `<div class="solar-detail-row"><span>${n}</span><span>${this._getEntityValue(e).toFixed(0)} <span class="unit">W</span></span></div>`;
-            }).join('');
+
+                const row = document.createElement('div');
+                row.className = 'solar-detail-row';
+                const nameSpan = document.createElement('span');
+                nameSpan.textContent = n;
+                const valueSpan = document.createElement('span');
+                valueSpan.textContent = `${this._getEntityValue(e).toFixed(0)} `;
+                const unitSpan = document.createElement('span');
+                unitSpan.className = 'unit';
+                unitSpan.textContent = 'W';
+                valueSpan.appendChild(unitSpan);
+                row.appendChild(nameSpan);
+                row.appendChild(valueSpan);
+                solDetCont.appendChild(row);
+            });
         } else {
             solDetCont.style.display = 'none';
         }
@@ -649,6 +664,22 @@ class EnergyOrbitCard extends HTMLElement {
          const sel = this.shadowRoot.getElementById('zendure-selector');
          if(sel && currentMode && sel.value !== currentMode) sel.value = currentMode;
     }
+  }
+
+  _sanitizeColor(color, fallback) {
+    if (typeof color !== 'string') return fallback;
+    // Allow: hex, rgb, rgba, hsl, hsla, var, and standard color names
+    // Disallow: characters that could be used for XSS like <, >, ", ', ;, {, }
+    const safePattern = /^[a-zA-Z0-9#(),. %_\-]+$/;
+    if (safePattern.test(color)) {
+      return color;
+    }
+    return fallback;
+  }
+
+  _sanitizeNumber(value, fallback) {
+    const num = parseFloat(value);
+    return isNaN(num) ? fallback : num;
   }
 
   _hexToRgb(hex) {
