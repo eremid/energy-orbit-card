@@ -15,8 +15,8 @@ const eocTranslations = {
     editor_initial_battery_mode: "Initial Battery Display", editor_initial_solar_mode: "Initial Solar Display",
     editor_show_zendure_mode: "Show Zendure Mode", editor_show_tempo: "Show Tempo",
     editor_enable_breathing: "Breathing Animation", editor_gauge_opacity: "Orbit Opacity",
-    editor_mobile_gauge_size: "Mobile Orbit Size (px)", opt_symmetric: "Symmetric", opt_import_only: "Import Only",
-    opt_export_only: "Export Only", opt_percent: "Percent", opt_power: "Power", opt_total: "Total", opt_detail: "Detail"
+    editor_mobile_gauge_size: "Mobile Orbit Size (px)", opt_bidirectional: "Bidirectional", opt_normal: "Normal",
+    opt_percent: "Percent", opt_power: "Power", opt_total: "Total", opt_detail: "Detail"
   },
   fr: {
     network: "RÉSEAU", charging: "CHARGE", discharging: "DÉCHARGE", standby: "VEILLE",
@@ -33,8 +33,8 @@ const eocTranslations = {
     editor_initial_battery_mode: "Affichage batterie initial", editor_initial_solar_mode: "Affichage solaire initial",
     editor_show_zendure_mode: "Afficher mode Zendure", editor_show_tempo: "Afficher Tempo",
     editor_enable_breathing: "Animation respiration", editor_gauge_opacity: "Opacité orbites",
-    editor_mobile_gauge_size: "Taille orbite mobile (px)", opt_symmetric: "Symétrique", opt_import_only: "Import uniquement",
-    opt_export_only: "Export uniquement", opt_percent: "Pourcentage", opt_power: "Puissance", opt_total: "Total", opt_detail: "Détail"
+    editor_mobile_gauge_size: "Taille orbite mobile (px)", opt_bidirectional: "Bidirectionnel", opt_normal: "Normal",
+    opt_percent: "Pourcentage", opt_power: "Puissance", opt_total: "Total", opt_detail: "Détail"
   },
   es: {
     network: "RED", charging: "CARGANDO", discharging: "DESCARGANDO", standby: "ESPERA",
@@ -51,8 +51,8 @@ const eocTranslations = {
     editor_initial_battery_mode: "Pantalla inicial de batería", editor_initial_solar_mode: "Pantalla inicial solar",
     editor_show_zendure_mode: "Mostrar modo Zendure", editor_show_tempo: "Mostrar Tempo",
     editor_enable_breathing: "Animación de respiración", editor_gauge_opacity: "Opacidad de órbitas",
-    editor_mobile_gauge_size: "Tamaño órbita móvil (px)", opt_symmetric: "Simétrico", opt_import_only: "Solo importación",
-    opt_export_only: "Solo exportación", opt_percent: "Porcentaje", opt_power: "Potencia", opt_total: "Total", opt_detail: "Detalle"
+    editor_mobile_gauge_size: "Tamaño órbita móvil (px)", opt_bidirectional: "Bidireccional", opt_normal: "Normal",
+    opt_percent: "Porcentaje", opt_power: "Potencia", opt_total: "Total", opt_detail: "Detalle"
   },
   de: {
     network: "NETZ", charging: "LÄDT", discharging: "ENTLÄDT", standby: "STANDBY",
@@ -69,8 +69,8 @@ const eocTranslations = {
     editor_initial_battery_mode: "Initiale Batterieanzeige", editor_initial_solar_mode: "Initiale Solaranzeige",
     editor_show_zendure_mode: "Zendure-Modus anzeigen", editor_show_tempo: "Tempo anzeigen",
     editor_enable_breathing: "Atmungsanimation", editor_gauge_opacity: "Orbit-Deckkraft",
-    editor_mobile_gauge_size: "Mobile Orbitgröße (px)", opt_symmetric: "Symmetrisch", opt_import_only: "Nur Import",
-    opt_export_only: "Nur Export", opt_percent: "Prozent", opt_power: "Leistung", opt_total: "Gesamt", opt_detail: "Detail"
+    editor_mobile_gauge_size: "Mobile Orbitgröße (px)", opt_bidirectional: "Bidirektional", opt_normal: "Normal",
+    opt_percent: "Prozent", opt_power: "Leistung", opt_total: "Gesamt", opt_detail: "Detail"
   }
 };
 
@@ -131,7 +131,7 @@ class EnergyOrbitCard extends HTMLElement {
       solar_max: this._sanitizeNumber(config.solar_max, 5000),
       grid_max: this._sanitizeNumber(config.grid_max, 6000),
       battery_power_max: this._sanitizeNumber(config.battery_power_max, 2400),
-      bidirectional_mode: (config.bidirectional_mode === 'import_only' || config.bidirectional_mode === 'export_only' || config.bidirectional_mode === 'symmetric') ? config.bidirectional_mode : 'symmetric',
+      bidirectional_mode: (config.bidirectional_mode === 'import_only' || config.bidirectional_mode === 'export_only' || config.bidirectional_mode === 'normal') ? 'normal' : 'bidirectional',
       
       initial_battery_mode: config.initial_battery_mode || 'percent',
       initial_solar_mode: config.initial_solar_mode || 'total',
@@ -713,7 +713,7 @@ class EnergyOrbitCard extends HTMLElement {
     const pct = Math.min(100, (abs / max) * 100);
     const arc = (half * pct) / 100;
 
-    if (this.config.bidirectional_mode === 'symmetric') {
+    if (this.config.bidirectional_mode === 'bidirectional') {
         if (value === 0) { 
             el.style.strokeDasharray = `0 ${C}`; 
             el.style.strokeDashoffset = 0; 
@@ -790,7 +790,7 @@ class EnergyOrbitCardEditor extends HTMLElement {
         ]
       },
       { type: 'grid', name: '', schema: [
-          { name: 'bidirectional_mode', selector: { select: { options: [{label:this._t('opt_symmetric'), value:'symmetric'}, {label:this._t('opt_import_only'), value:'import_only'}, {label:this._t('opt_export_only'), value:'export_only'}] } } },
+          { name: 'bidirectional_mode', selector: { select: { options: [{label:this._t('opt_normal'), value:'normal'}, {label:this._t('opt_bidirectional'), value:'bidirectional'}] } } },
           { name: 'initial_battery_mode', selector: { select: { options: [{label:this._t('opt_percent'), value:'percent'}, {label:this._t('opt_power'), value:'power'}] } } },
           { name: 'initial_solar_mode', selector: { select: { options: [{label:this._t('opt_total'), value:'total'}, {label:this._t('opt_detail'), value:'detail'}] } } },
         ]
