@@ -1,5 +1,6 @@
 {
   "name": "Energy Orbit Card",
   "render": "lovelace",
-  "filename": "energy-orbit-card.js"
+  "filename": "energy-orbit-card.js",
+  "version": "1.0.1"
 }
