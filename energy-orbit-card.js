@@ -15,8 +15,8 @@ const eocTranslations = {
     editor_initial_battery_mode: "Initial Battery Display", editor_initial_solar_mode: "Initial Solar Display",
     editor_show_zendure_mode: "Show Zendure Mode", editor_show_tempo: "Show Tempo",
     editor_enable_breathing: "Breathing Animation", editor_gauge_opacity: "Orbit Opacity",
-    editor_mobile_gauge_size: "Mobile Orbit Size (px)", opt_bidirectional: "Bidirectional", opt_normal: "Normal",
-    opt_percent: "Percent", opt_power: "Power", opt_total: "Total", opt_detail: "Detail"
+    editor_mobile_gauge_size: "Mobile Orbit Size (px)", opt_symmetric: "Symmetric", opt_import_only: "Import Only",
+    opt_export_only: "Export Only", opt_percent: "Percent", opt_power: "Power", opt_total: "Total", opt_detail: "Detail"
   },
   fr: {
     network: "RÉSEAU", charging: "CHARGE", discharging: "DÉCHARGE", standby: "VEILLE",
@@ -33,8 +33,8 @@ const eocTranslations = {
     editor_initial_battery_mode: "Affichage batterie initial", editor_initial_solar_mode: "Affichage solaire initial",
     editor_show_zendure_mode: "Afficher mode Zendure", editor_show_tempo: "Afficher Tempo",
     editor_enable_breathing: "Animation respiration", editor_gauge_opacity: "Opacité orbites",
-    editor_mobile_gauge_size: "Taille orbite mobile (px)", opt_bidirectional: "Bidirectionnel", opt_normal: "Normal",
-    opt_percent: "Pourcentage", opt_power: "Puissance", opt_total: "Total", opt_detail: "Détail"
+    editor_mobile_gauge_size: "Taille orbite mobile (px)", opt_symmetric: "Symétrique", opt_import_only: "Import uniquement",
+    opt_export_only: "Export uniquement", opt_percent: "Pourcentage", opt_power: "Puissance", opt_total: "Total", opt_detail: "Détail"
   },
   es: {
     network: "RED", charging: "CARGANDO", discharging: "DESCARGANDO", standby: "ESPERA",
@@ -51,8 +51,8 @@ const eocTranslations = {
     editor_initial_battery_mode: "Pantalla inicial de batería", editor_initial_solar_mode: "Pantalla inicial solar",
     editor_show_zendure_mode: "Mostrar modo Zendure", editor_show_tempo: "Mostrar Tempo",
     editor_enable_breathing: "Animación de respiración", editor_gauge_opacity: "Opacidad de órbitas",
-    editor_mobile_gauge_size: "Tamaño órbita móvil (px)", opt_bidirectional: "Bidireccional", opt_normal: "Normal",
-    opt_percent: "Porcentaje", opt_power: "Potencia", opt_total: "Total", opt_detail: "Detalle"
+    editor_mobile_gauge_size: "Tamaño órbita móvil (px)", opt_symmetric: "Simétrico", opt_import_only: "Solo importación",
+    opt_export_only: "Solo exportación", opt_percent: "Porcentaje", opt_power: "Potencia", opt_total: "Total", opt_detail: "Detalle"
   },
   de: {
     network: "NETZ", charging: "LÄDT", discharging: "ENTLÄDT", standby: "STANDBY",
@@ -69,18 +69,18 @@ const eocTranslations = {
     editor_initial_battery_mode: "Initiale Batterieanzeige", editor_initial_solar_mode: "Initiale Solaranzeige",
     editor_show_zendure_mode: "Zendure-Modus anzeigen", editor_show_tempo: "Tempo anzeigen",
     editor_enable_breathing: "Atmungsanimation", editor_gauge_opacity: "Orbit-Deckkraft",
-    editor_mobile_gauge_size: "Mobile Orbitgröße (px)", opt_bidirectional: "Bidirektional", opt_normal: "Normal",
-    opt_percent: "Prozent", opt_power: "Leistung", opt_total: "Gesamt", opt_detail: "Detail"
+    editor_mobile_gauge_size: "Mobile Orbitgröße (px)", opt_symmetric: "Symmetrisch", opt_import_only: "Nur Import",
+    opt_export_only: "Nur Export", opt_percent: "Prozent", opt_power: "Leistung", opt_total: "Gesamt", opt_detail: "Detail"
   }
 };
 
-const eocMdiPaths = {
+const eocIcons = {
   'grid': 'M8.28,5.45L6.5,4.55L7.76,2H16.23L17.5,4.55L15.72,5.44L15,4H9L8.28,5.45M18.62,8H14.09L13.3,5H10.7L9.91,8H5.38L4.1,10.55L5.89,11.44L6.62,10H17.38L18.1,11.45L19.89,10.56L18.62,8M17.77,22H15.7L15.46,21.1L12,15.9L8.53,21.1L8.3,22H6.23L9.12,11H11.19L10.83,12.35L12,14.1L13.16,12.35L12.81,11H14.88L17.77,22M11.4,15L10.5,13.65L9.32,18.13L11.4,15M14.68,18.12L13.5,13.64L12.6,15L14.68,18.12Z',
-  'grid-import': 'M8.28,5.45L6.5,4.55L7.76,2H16.23L17.5,4.55L15.72,5.44L15,4H9L8.28,5.45M18.62,8H14.09L13.3,5H10.7L9.91,8H5.38L4.1,10.55L5.89,11.44L6.62,10H17.38L18.1,11.45L19.89,10.56L18.62,8M17.77,22H15.7L15.46,21.1L12,15.9L8.53,21.1L8.3,22H6.23L9.12,11H11.19L10.83,12.35L12,14.1L13.16,12.35L12.81,11H14.88L17.77,22M11.4,15L10.5,13.65L9.32,18.13L11.4,15M14.68,18.12L13.5,13.64L12.6,15L14.68,18.12Z',
   'battery': 'M16 18H8V6h8M4.67 19h14.66c.57 0 1.02-.46.95-1.02l-.77-7.09c-.05-.42-.39-.73-.81-.73H5.3c-.42 0-.76.31-.81.73l-.77 7.09c-.07.56.38 1.02.95 1.02M16 4H8v2h8V4z',
-  'battery-charging': 'M20 4H6C4.89 4 4 4.89 4 6V18C4 19.11 4.89 20 6 20H20C21.11 20 22 19.11 22 18V6C22 4.89 21.11 4 20 4M13 17L11 13H7L12 7L14 11H18L13 17Z'
+  'battery-charging': 'M20 4H6C4.89 4 4 4.89 4 6V18C4 19.11 4.89 20 6 20H20C21.11 20 22 19.11 22 18V6C22 4.89 21.11 4 20 4M13 17L11 13H7L12 7L14 11H18L13 17Z',
+  'solar': 'M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.83 14.37,18.56L12,22Z',
+  'zendure': 'M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z'
 };
-
 /**
  * Energy Gauge Card V4.5.0 - Rounded Bars & Custom Colors
  * @version 4.5.0
@@ -131,7 +131,7 @@ class EnergyOrbitCard extends HTMLElement {
       solar_max: this._sanitizeNumber(config.solar_max, 5000),
       grid_max: this._sanitizeNumber(config.grid_max, 6000),
       battery_power_max: this._sanitizeNumber(config.battery_power_max, 2400),
-      bidirectional_mode: (config.bidirectional_mode === 'import_only' || config.bidirectional_mode === 'export_only' || config.bidirectional_mode === 'normal') ? 'normal' : 'bidirectional',
+      bidirectional_mode: (config.bidirectional_mode === 'import_only' || config.bidirectional_mode === 'export_only' || config.bidirectional_mode === 'symmetric') ? config.bidirectional_mode : 'symmetric',
       
       initial_battery_mode: config.initial_battery_mode || 'percent',
       initial_solar_mode: config.initial_solar_mode || 'total',
@@ -248,7 +248,8 @@ class EnergyOrbitCard extends HTMLElement {
   }
 
   _getMdiPath(icon) {
-    return eocMdiPaths[icon] || eocMdiPaths['grid'];
+    return eocIcons[icon] || eocIcons['grid'];
+  }
   }
 
   _render() {
@@ -383,7 +384,7 @@ class EnergyOrbitCard extends HTMLElement {
                   </div>
                 </div>
                 <div class="stat-item clickable" id="solar-stat-item" style="--stat-color: ${c.solar}; --stat-bg: ${c.solar}26;">
-                  <div class="stat-icon breathing" id="solar-icon-wrapper" style="--halo-rgb: 255,215,0;"><svg viewBox="0 0 24 24" fill="${c.solar}"><path d="M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M12,2L14.39,5.42C13.65,5.15 12.84,5 12,5C11.16,5 10.35,5.15 9.61,5.42L12,2M3.34,7L7.5,6.65C6.9,7.16 6.36,7.78 5.94,8.5C5.5,9.24 5.25,10 5.11,10.79L3.34,7M3.36,17L5.12,13.23C5.26,14 5.53,14.78 5.95,15.5C6.37,16.24 6.91,16.86 7.5,17.37L3.36,17M20.65,7L18.88,10.79C18.74,10 18.47,9.23 18.05,8.5C17.63,7.78 17.1,7.15 16.5,6.64L20.65,7M20.64,17L16.5,17.36C17.09,16.85 17.62,16.22 18.04,15.5C18.46,14.77 18.73,14 18.87,13.21L20.64,17M12,22L9.59,18.56C10.33,18.83 11.14,19 12,19C12.82,19 13.63,18.83 14.37,18.56L12,22Z"/></svg></div>
+                  <div class="stat-icon breathing" id="solar-icon-wrapper" style="--halo-rgb: 255,215,0;"><svg viewBox="0 0 24 24" fill="${c.solar}"><path d="${this._getMdiPath('solar')}"/></svg></div>
                   <div class="stat-content">
                     <div class="stat-main-line"><span class="stat-value" id="solar-value">--</span><span class="stat-unit">W</span><span class="stat-label">${this._t('production')}</span></div>
                     <div id="solar-details-container" class="solar-details" style="display: none;"></div>
@@ -431,7 +432,7 @@ class EnergyOrbitCard extends HTMLElement {
 
         ${this.config.show_zendure_mode && this.config.zendure_mode_entity ? `
           <div class="zendure-mode">
-            <svg viewBox="0 0 24 24" style="width:20px;height:20px;flex-shrink:0;"><path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" fill="currentColor"/></svg>
+            <svg viewBox="0 0 24 24" style="width:20px;height:20px;flex-shrink:0;"><path d="${this._getMdiPath('zendure')}" fill="currentColor"/></svg>
             <select class="zendure-select" id="zendure-selector"><option value="auto">${this._t('loading')}</option></select>
           </div>
         ` : ''}
@@ -712,7 +713,7 @@ class EnergyOrbitCard extends HTMLElement {
     const pct = Math.min(100, (abs / max) * 100);
     const arc = (half * pct) / 100;
 
-    if (this.config.bidirectional_mode === 'bidirectional') {
+    if (this.config.bidirectional_mode === 'symmetric') {
         if (value === 0) { 
             el.style.strokeDasharray = `0 ${C}`; 
             el.style.strokeDashoffset = 0; 
@@ -789,7 +790,7 @@ class EnergyOrbitCardEditor extends HTMLElement {
         ]
       },
       { type: 'grid', name: '', schema: [
-          { name: 'bidirectional_mode', selector: { select: { options: [{label:this._t('opt_normal'), value:'normal'}, {label:this._t('opt_bidirectional'), value:'bidirectional'}] } } },
+          { name: 'bidirectional_mode', selector: { select: { options: [{label:this._t('opt_symmetric'), value:'symmetric'}, {label:this._t('opt_import_only'), value:'import_only'}, {label:this._t('opt_export_only'), value:'export_only'}] } } },
           { name: 'initial_battery_mode', selector: { select: { options: [{label:this._t('opt_percent'), value:'percent'}, {label:this._t('opt_power'), value:'power'}] } } },
           { name: 'initial_solar_mode', selector: { select: { options: [{label:this._t('opt_total'), value:'total'}, {label:this._t('opt_detail'), value:'detail'}] } } },
         ]
