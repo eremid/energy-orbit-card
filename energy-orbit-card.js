@@ -4,6 +4,7 @@ const eocTranslations = {
     network: "GRID", charging: "CHARGING", discharging: "DISCHARGING", standby: "STANDBY",
     production: "PRODUCTION", today: "TODAY", tomorrow: "TOMORROW", battery: "BATTERY", off: "OFF",
     loading: "Loading...", z_charge: "Priority Charge", z_discharge: "Priority Discharge", z_off: "Off",
+    import: "IMPORT", export: "EXPORT",
 
     editor_grid_entity: "Grid Entity", editor_battery_entities: "Battery Level Entities",
     editor_battery_power_entities: "Battery Power Entities", editor_solar_entities: "Solar Production Entities",
@@ -15,6 +16,7 @@ const eocTranslations = {
     editor_initial_battery_mode: "Initial Battery Display", editor_initial_solar_mode: "Initial Solar Display",
     editor_show_zendure_mode: "Show Zendure Mode", editor_show_tempo: "Show Tempo",
     editor_enable_breathing: "Breathing Animation", editor_gauge_opacity: "Orbit Opacity",
+    editor_show_ring_labels: "Show Ring Labels",
     editor_mobile_gauge_size: "Mobile Orbit Size (px)", opt_bidirectional: "Bidirectional", opt_normal: "Normal",
     opt_percent: "Percent", opt_power: "Power", opt_total: "Total", opt_detail: "Detail"
   },
@@ -22,6 +24,7 @@ const eocTranslations = {
     network: "RÉSEAU", charging: "CHARGE", discharging: "DÉCHARGE", standby: "VEILLE",
     production: "PRODUCTION", today: "AUJOURD'HUI", tomorrow: "DEMAIN", battery: "BATTERIE", off: "ARRÊT",
     loading: "Chargement...", z_charge: "Charge Prioritaire", z_discharge: "Décharge Prioritaire", z_off: "Arrêt (Off)",
+    import: "IMPORT", export: "EXPORT",
 
     editor_grid_entity: "Entité réseau (grid)", editor_battery_entities: "Entités niveau batterie",
     editor_battery_power_entities: "Entités puissance batterie", editor_solar_entities: "Entités production solaire",
@@ -33,6 +36,7 @@ const eocTranslations = {
     editor_initial_battery_mode: "Affichage batterie initial", editor_initial_solar_mode: "Affichage solaire initial",
     editor_show_zendure_mode: "Afficher mode Zendure", editor_show_tempo: "Afficher Tempo",
     editor_enable_breathing: "Animation respiration", editor_gauge_opacity: "Opacité orbites",
+    editor_show_ring_labels: "Afficher labels anneaux",
     editor_mobile_gauge_size: "Taille orbite mobile (px)", opt_bidirectional: "Bidirectionnel", opt_normal: "Normal",
     opt_percent: "Pourcentage", opt_power: "Puissance", opt_total: "Total", opt_detail: "Détail"
   },
@@ -40,6 +44,7 @@ const eocTranslations = {
     network: "RED", charging: "CARGANDO", discharging: "DESCARGANDO", standby: "ESPERA",
     production: "PRODUCCIÓN", today: "HOY", tomorrow: "MAÑANA", battery: "BATERÍA", off: "APAGADO",
     loading: "Cargando...", z_charge: "Carga Prioritaria", z_discharge: "Descarga Prioritaria", z_off: "Apagado",
+    import: "IMPORT", export: "EXPORT",
 
     editor_grid_entity: "Entidad de red (grid)", editor_battery_entities: "Entidades de nivel de batería",
     editor_battery_power_entities: "Entidades de potencia de batería", editor_solar_entities: "Entidades de producción solar",
@@ -51,6 +56,7 @@ const eocTranslations = {
     editor_initial_battery_mode: "Pantalla inicial de batería", editor_initial_solar_mode: "Pantalla inicial solar",
     editor_show_zendure_mode: "Mostrar modo Zendure", editor_show_tempo: "Mostrar Tempo",
     editor_enable_breathing: "Animación de respiración", editor_gauge_opacity: "Opacidad de órbitas",
+    editor_show_ring_labels: "Mostrar etiquetas de anillos",
     editor_mobile_gauge_size: "Tamaño órbita móvil (px)", opt_bidirectional: "Bidireccional", opt_normal: "Normal",
     opt_percent: "Porcentaje", opt_power: "Potencia", opt_total: "Total", opt_detail: "Detalle"
   },
@@ -58,6 +64,7 @@ const eocTranslations = {
     network: "NETZ", charging: "LÄDT", discharging: "ENTLÄDT", standby: "STANDBY",
     production: "PRODUKTION", today: "HEUTE", tomorrow: "MORGEN", battery: "BATTERIE", off: "AUS",
     loading: "Wird geladen...", z_charge: "Vorrangige Ladung", z_discharge: "Vorrangige Entladung", z_off: "Aus",
+    import: "IMPORT", export: "EXPORT",
 
     editor_grid_entity: "Netz-Entität (grid)", editor_battery_entities: "Batteriestand-Entitäten",
     editor_battery_power_entities: "Batterieleistung-Entitäten", editor_solar_entities: "Solarproduktion-Entitäten",
@@ -69,6 +76,7 @@ const eocTranslations = {
     editor_initial_battery_mode: "Initiale Batterieanzeige", editor_initial_solar_mode: "Initiale Solaranzeige",
     editor_show_zendure_mode: "Zendure-Modus anzeigen", editor_show_tempo: "Tempo anzeigen",
     editor_enable_breathing: "Atmungsanimation", editor_gauge_opacity: "Orbit-Deckkraft",
+    editor_show_ring_labels: "Ringbeschriftungen anzeigen",
     editor_mobile_gauge_size: "Mobile Orbitgröße (px)", opt_bidirectional: "Bidirektional", opt_normal: "Normal",
     opt_percent: "Prozent", opt_power: "Leistung", opt_total: "Gesamt", opt_detail: "Detail"
   }
@@ -144,6 +152,7 @@ class EnergyOrbitCard extends HTMLElement {
       grid_alert_threshold: this._sanitizeNumber(config.grid_alert_threshold, 9000),
       show_zendure_mode: config.show_zendure_mode !== false,
       show_tempo: config.show_tempo !== false,
+      show_ring_labels: config.show_ring_labels === true,
       gauge_opacity: this._sanitizeNumber(config.gauge_opacity !== undefined ? config.gauge_opacity : 0.8, 0.8),
       enable_breathing: config.enable_breathing !== false,
       mobile_gauge_size: this._sanitizeNumber(config.mobile_gauge_size, 160),
@@ -407,23 +416,44 @@ class EnergyOrbitCard extends HTMLElement {
                        <linearGradient id="batteryChargingGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.battery_charge}"/><stop offset="100%" style="stop-color:${c.battery_charge}aa"/></linearGradient>
                        <linearGradient id="batteryDischargingGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.battery_discharge}"/><stop offset="100%" style="stop-color:${c.battery_discharge}aa"/></linearGradient>
                        <filter id="glow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                       ${this.config.show_ring_labels ? `
+                         <path id="path-battery-level" d="M 100, 188 A 88,88 0 1,1 100, 12 A 88,88 0 1,1 100, 188" />
+                         <path id="path-grid" d="M 100, 172 A 72,72 0 1,1 100, 28 A 72,72 0 1,1 100, 172" />
+                         <path id="path-battery-power" d="M 100, 163 A 63,63 0 1,1 100, 37 A 63,63 0 1,1 100, 163" />
+                         <path id="path-solar" d="M 100, 154 A 54,54 0 1,1 100, 46 A 54,54 0 1,1 100, 154" />
+                       ` : ''}
                      </defs>
 
-                     <!-- Battery (Outer) - r=84 -->
+                     ${this.config.show_ring_labels ? `
+                       <style>
+                         .ring-label { font-size: 6px; font-weight: 900; fill: #fff; text-transform: uppercase; pointer-events: none; letter-spacing: 0.5px; opacity: 0.9; dominant-baseline: middle; }
+                       </style>
+                     ` : ''}
+
+                     <!-- Battery Level (Outer) - r=88 -->
                      <circle class="gauge-track" cx="100" cy="100" r="88" stroke-width="10" transform="rotate(-90 100 100)" />
                      <circle class="gauge-progress" cx="100" cy="100" r="88" id="battery-level-gauge" transform="rotate(-90 100 100)" stroke="url(#batteryGradient)" stroke-width="10" filter="url(#glow)"/>
 
-                     <!-- Grid - r=68 -->
+                     <!-- Grid - r=72 -->
                      <circle class="gauge-track" cx="100" cy="100" r="72" stroke-width="8" transform="rotate(-90 100 100)" />
                      <circle class="gauge-progress" cx="100" cy="100" r="72" id="grid-gauge" transform="rotate(-90 100 100)" stroke="url(#gridGradient)" stroke-width="8" filter="url(#glow)"/>
 
-                     <!-- Battery Power - r=52 -->
+                     <!-- Battery Power - r=63 -->
                      <circle class="gauge-track" cx="100" cy="100" r="63" stroke-width="8" transform="rotate(-90 100 100)" />
                      <circle class="gauge-progress" cx="100" cy="100" r="63" id="battery-power-gauge" transform="rotate(-90 100 100)" stroke="url(#batteryDischargingGradient)" stroke-width="8" filter="url(#glow)"/>
 
-                     <!-- Solar (Inner) - r=36 -->
+                     <!-- Solar (Inner) - r=54 -->
                      <circle class="gauge-track" cx="100" cy="100" r="54" stroke-width="8" transform="rotate(-90 100 100)" />
                      <circle class="gauge-progress" cx="100" cy="100" r="54" id="solar-gauge" transform="rotate(-90 100 100)" stroke="url(#solarGradient)" stroke-width="8" filter="url(#glow)"/>
+
+                     ${this.config.show_ring_labels ? `
+                       <text id="label-battery-level" class="ring-label" dy="1.8"><textPath href="#path-battery-level" startOffset="48%">${this._t('battery')}</textPath></text>
+                       <text id="label-grid" class="ring-label" dy="1.8"><textPath href="#path-grid" startOffset="48%">${this._t('network')}</textPath></text>
+                       <text id="label-battery-power" class="ring-label" dy="1.8"><textPath href="#path-battery-power" startOffset="48%">${this._t('battery')}</textPath></text>
+                       <text id="label-solar" class="ring-label" dy="1.8"><textPath href="#path-solar" startOffset="48%">${this._t('production')}</textPath></text>
+                     ` : ''}
+                  </svg>
+                  </svg>
                   </svg>
                   <div class="center-content">
                      <div class="grid-value" id="center-value">--</div><div class="grid-unit" id="center-unit">W</div>
@@ -643,10 +673,33 @@ class EnergyOrbitCard extends HTMLElement {
     }
 
     // GAUGES
-    this._updateGauge('battery-level-gauge', Math.max(0, Math.min(100, batteryPercent)), 88); // r=84
-    this._updateBidirectionalGauge('grid-gauge', grid, this.config.grid_max, 72, isInjection); // r=68
-    this._updateGauge('solar-gauge', Math.min(100, (solar / this.config.solar_max)*100), 54); // r=36 (Inner)
-    this._updateBidirectionalGauge('battery-power-gauge', batteryPower, this.config.battery_power_max, 63, !isCharging); // r=52
+    const signedBatteryPower = isCharging ? -Math.abs(batteryPower) : Math.abs(batteryPower);
+    this._updateGauge('battery-level-gauge', Math.max(0, Math.min(100, batteryPercent)), 88);
+    this._updateBidirectionalGauge('grid-gauge', grid, this.config.grid_max, 72, isInjection);
+    this._updateBidirectionalGauge('battery-power-gauge', signedBatteryPower, this.config.battery_power_max, 63, !isCharging);
+    this._updateGauge('solar-gauge', Math.min(100, (solar / this.config.solar_max)*100), 54);
+
+    // DYNAMIC LABELS
+    if (this.config.show_ring_labels) {
+        const updateLabel = (id, text, isNegativeFlow) => {
+            const el = this.shadowRoot.getElementById(id);
+            if (!el) return;
+            const tp = el.querySelector('textPath');
+            if (tp) tp.textContent = text;
+            if (isNegativeFlow) {
+                tp.setAttribute('startOffset', '51.5%');
+                el.style.textAnchor = 'start';
+            } else {
+                tp.setAttribute('startOffset', '48.5%');
+                el.style.textAnchor = 'end';
+            }
+        };
+
+        updateLabel('label-battery-level', this._t('battery'), false);
+        updateLabel('label-grid', grid >= 0 ? this._t('import') : this._t('export'), grid < 0);
+        updateLabel('label-battery-power', isCharging ? this._t('charging') : this._t('discharging'), isCharging);
+        updateLabel('label-solar', this._t('production'), false);
+    }
 
     // TEMPO
     const getTempoColor = (s) => {
@@ -721,11 +774,13 @@ class EnergyOrbitCard extends HTMLElement {
             el.style.strokeDasharray = `0 ${C}`; 
             el.style.strokeDashoffset = 0; 
         } else if (value > 0) { 
+            // Clockwise from top
             el.style.strokeDasharray = `${arc} ${C - arc}`; 
-            el.style.strokeDashoffset = `${half}`; 
+            el.style.strokeDashoffset = 0; 
         } else { 
+            // Counter-clockwise from top
             el.style.strokeDasharray = `${arc} ${C - arc}`; 
-            el.style.strokeDashoffset = `${half + arc}`; 
+            el.style.strokeDashoffset = `${arc}`; 
         }
     } else {
         const arcUni = (C * pct) / 100;
@@ -799,6 +854,7 @@ class EnergyOrbitCardEditor extends HTMLElement {
       { type: 'grid', name: '', schema: [
           { name: 'show_zendure_mode', selector: { boolean: {} } },
           { name: 'show_tempo', selector: { boolean: {} } },
+          { name: 'show_ring_labels', selector: { boolean: {} } },
           { name: 'enable_breathing', selector: { boolean: {} } },
         ]
       },
@@ -844,6 +900,7 @@ class EnergyOrbitCardEditor extends HTMLElement {
         initial_solar_mode: this._t('editor_initial_solar_mode'),
         show_zendure_mode: this._t('editor_show_zendure_mode'),
         show_tempo: this._t('editor_show_tempo'),
+        show_ring_labels: this._t('editor_show_ring_labels'),
         enable_breathing: this._t('editor_enable_breathing'),
         gauge_opacity: this._t('editor_gauge_opacity'),
         mobile_gauge_size: this._t('editor_mobile_gauge_size')
