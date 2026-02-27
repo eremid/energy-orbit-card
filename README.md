@@ -12,13 +12,29 @@ Designed for setups with solar panels, a home battery (perfect for Zendure) and 
 ## ✨ Features
 
 - 📊 **Concentric Orbits** — Visualize Grid (Import/Export), Solar Production and Battery level at a glance.
+- 🏷️ **Dynamic Labels** — Integrated labels directly inside the rings showing current state (IMPORT, EXPORT, CHARGING, DISCHARGING).
+- 🔄 **Smart Directions** — All gauges start at the top (12 o'clock). Positive flows (Import, Discharge, Production) go clockwise, while negative flows (Export, Charge) go counter-clockwise.
 - 🌍 **Automatic i18n** — Detects your Home Assistant profile language automatically (English, French, Spanish, German).
 - ⚙️ **Visual UI Editor** — Configure all entities, max values, thresholds and options directly from the Lovelace card editor. No YAML needed.
 - 🌓 **Theme-aware** — Borders, shadows and text colors adapt natively to your dashboard Light or Dark theme.
 - 🔋 **Zendure Support** — Includes a built-in dropdown to switch your Zendure battery mode (Priority Charge, Priority Discharge, etc.) directly from the card.
 - 🔴 **EDF Tempo Color** — Displays the current day Tempo color (Blue, White, Red) as an indicator.
-- 📱 **Responsive** — Orbit size is configurable for mobile screens.
+- 📱 **Responsive** — Mobile-optimized layout with a large, clear orbit display.
 - 🌬️ **Breathing Animation** — Optional subtle animation when data is live.
+
+## 📐 Orbit Logic & Directions
+
+All rings start at the **top (12 o'clock)** for a cleaner, unified look.
+
+| Ring | Flow Type | Direction | Label |
+|---|---|---|---|
+| **Outer** | Battery Level (%) | Clockwise | BATTERY |
+| **Middle 1** | Grid Power (W) | Clockwise (Import) / Counter-Clockwise (Export) | IMPORT / EXPORT |
+| **Middle 2** | Battery Power (W) | Clockwise (Discharge) / Counter-Clockwise (Charge) | DISCHARGING / CHARGING |
+| **Inner** | Solar Power (W) | Clockwise | PRODUCTION |
+
+![Energy Orbit Card Discharge Mode](https://raw.githubusercontent.com/eremid/energy-orbit-card/main/discharge-mode.png)
+*Example: Card in Discharge mode (Battery power flowing clockwise).*
 
 ## 📦 Installation
 

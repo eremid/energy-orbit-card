@@ -283,35 +283,17 @@ class EnergyOrbitCard extends HTMLElement {
         .stats-col { display: flex; flex-direction: column; gap: 10px; z-index: 2; position: relative; padding-top: 0; }
         .gauge-col { display: flex; justify-content: center; align-items: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none; width: 100%; height: 100%; }
 
-        
         @media (max-width: 500px) {
-            .main-layout { display: block !important; min-height: 0 !important; }
-            .stats-col { display: flex; flex-direction: column; gap: 8px; padding-top: 0; }
-            #grid-stat { width: 55%; }
-            #battery-stat-item { width: 55%; }
-            #solar-stat-item { width: 100%; margin-top: 4px; }
-            .gauge-col { 
-                position: absolute !important; 
-                top: -5px !important; 
-                right: -15px !important; 
-                left: auto !important; 
-                transform: none !important; 
-                width: 50% !important; 
-                height: 150px !important; 
-                display: flex !important;
-                justify-content: center !important;
-                align-items: center !important;
-                margin: 0 !important;
-                z-index: 10;
-                pointer-events: none;
-            }
-            .gauge-wrapper { width: 150px !important; height: 150px !important; overflow: visible; }
-            .center-content { width: 65px !important; height: 65px !important; }
-            .grid-value { font-size: 1.6em !important; }
-            .grid-unit { font-size: 0.9em !important; }
-            .stat-label { font-size: 0.6em; }
+          ha-card { padding: 8px 12px 12px 12px !important; }
+          .main-layout { min-height: 230px !important; }
+          .stats-col { width: 50% !important; }
+          .gauge-col { left: 75% !important; }
+          .gauge-wrapper { width: 220px !important; height: 220px !important; }
+          .stat-label { display: none !important; }
+          .stat-subtext, .solar-details { font-size: 0.65em !important; }
+          .zendure-mode { margin-top: 4px !important; }
+          .tempo-container { margin-top: 4px !important; padding-top: 4px !important; }
         }
-
 
         .stat-item {
           background: var(--input-fill-color, rgba(128, 128, 128, 0.1));
@@ -378,7 +360,7 @@ class EnergyOrbitCard extends HTMLElement {
         .tempo-indicator { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 10px currentColor; border: 2px solid rgba(255,255,255,0.2); }
       </style>
 
-      <ha-card style="--gauge-opacity: ${this.config.gauge_opacity}; --mobile-gauge-size: ${this.config.mobile_gauge_size}px;">
+      <ha-card style="--gauge-opacity: ${this.config.gauge_opacity};">
         <div class="card-container">
           <div class="main-layout">
             <div class="stats-col" id="stats-grid">
@@ -452,8 +434,6 @@ class EnergyOrbitCard extends HTMLElement {
                        <text id="label-battery-power" class="ring-label" dy="1.8"><textPath href="#path-battery-power" startOffset="48%">${this._t('battery')}</textPath></text>
                        <text id="label-solar" class="ring-label" dy="1.8"><textPath href="#path-solar" startOffset="48%">${this._t('production')}</textPath></text>
                      ` : ''}
-                  </svg>
-                  </svg>
                   </svg>
                   <div class="center-content">
                      <div class="grid-value" id="center-value">--</div><div class="grid-unit" id="center-unit">W</div>
@@ -593,7 +573,10 @@ class EnergyOrbitCard extends HTMLElement {
 
     const batAutoEl = this.shadowRoot.getElementById('battery-autonomy');
     if (batAutoEl) {
-        if (this._batteryMode === 'percent') {
+        // Hide subtext if battery > 70% to avoid overlap with the outer ring on desktop
+        if (batteryPercent > 70) {
+            batAutoEl.textContent = "";
+        } else if (this._batteryMode === 'percent') {
             if (this.config.battery_capacity_wh && Math.abs(batteryPower) > 10) {
                 let text = "";
                 const capacity = this.config.battery_capacity_wh;
