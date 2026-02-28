@@ -11,6 +11,7 @@ const eocTranslations = {
     editor_operation_state_entity: "Battery Operation State Entity", editor_zendure_mode_entity: "Zendure Mode (select)",
     editor_tempo_today_entity: "Tempo Color Today", editor_grid_max: "Grid Max (W)", editor_solar_max: "Solar Max (W)",
     editor_battery_max: "Battery Max (%)", editor_battery_power_max: "Battery Power Max (W)",
+    editor_battery_power_max_entity: "Battery Power Max Entity (Zendure)",
     editor_battery_capacity_wh: "Battery Capacity (Wh)", editor_grid_warning_threshold: "Grid Warning Threshold (W)",
     editor_grid_alert_threshold: "Grid Alert Threshold (W)", editor_bidirectional_mode: "Gauge Mode",
     editor_initial_battery_mode: "Initial Battery Display", editor_initial_solar_mode: "Initial Solar Display",
@@ -31,6 +32,7 @@ const eocTranslations = {
     editor_operation_state_entity: "État opérationnel batterie", editor_zendure_mode_entity: "Mode Zendure (select)",
     editor_tempo_today_entity: "Couleur Tempo EDF", editor_grid_max: "Max réseau (W)", editor_solar_max: "Max solaire (W)",
     editor_battery_max: "Max batterie (%)", editor_battery_power_max: "Max puissance batterie (W)",
+    editor_battery_power_max_entity: "Entité puissance max batterie (Zendure)",
     editor_battery_capacity_wh: "Capacité batterie (Wh)", editor_grid_warning_threshold: "Seuil alerte réseau (W)",
     editor_grid_alert_threshold: "Seuil critique réseau (W)", editor_bidirectional_mode: "Mode de la jauge",
     editor_initial_battery_mode: "Affichage batterie initial", editor_initial_solar_mode: "Affichage solaire initial",
@@ -51,6 +53,7 @@ const eocTranslations = {
     editor_operation_state_entity: "Entidad de estado operativo de batería", editor_zendure_mode_entity: "Modo Zendure (select)",
     editor_tempo_today_entity: "Color Tempo Hoy", editor_grid_max: "Max red (W)", editor_solar_max: "Max solar (W)",
     editor_battery_max: "Max batería (%)", editor_battery_power_max: "Max potencia batería (W)",
+    editor_battery_power_max_entity: "Entidad potencia máx batería (Zendure)",
     editor_battery_capacity_wh: "Capacidad de batería (Wh)", editor_grid_warning_threshold: "Umbral advertencia red (W)",
     editor_grid_alert_threshold: "Umbral crítico red (W)", editor_bidirectional_mode: "Modo de indicador",
     editor_initial_battery_mode: "Pantalla inicial de batería", editor_initial_solar_mode: "Pantalla inicial solar",
@@ -71,6 +74,7 @@ const eocTranslations = {
     editor_operation_state_entity: "Batteriestatus-Entität", editor_zendure_mode_entity: "Zendure-Modus (select)",
     editor_tempo_today_entity: "Tempo Farbe Heute", editor_grid_max: "Max Netz (W)", editor_solar_max: "Max Solar (W)",
     editor_battery_max: "Max Batterie (%)", editor_battery_power_max: "Max Batterieleistung (W)",
+    editor_battery_power_max_entity: "Entität maximale Batterieleistung (Zendure)",
     editor_battery_capacity_wh: "Batteriekapazität (Wh)", editor_grid_warning_threshold: "Netz-Warnschwelle (W)",
     editor_grid_alert_threshold: "Netz-Kritische Schwelle (W)", editor_bidirectional_mode: "Anzeigemodus",
     editor_initial_battery_mode: "Initiale Batterieanzeige", editor_initial_solar_mode: "Initiale Solaranzeige",
@@ -129,6 +133,7 @@ class EnergyOrbitCard extends HTMLElement {
       solar_max: this._sanitizeNumber(config.solar_max, 5000),
       grid_max: this._sanitizeNumber(config.grid_max, 6000),
       battery_power_max: this._sanitizeNumber(config.battery_power_max, 2400),
+      battery_power_max_entity: config.battery_power_max_entity,
       bidirectional_mode: (config.bidirectional_mode === 'import_only' || config.bidirectional_mode === 'export_only' || config.bidirectional_mode === 'normal') ? 'normal' : 'bidirectional',
       
       initial_battery_mode: config.initial_battery_mode || 'percent',
@@ -476,6 +481,13 @@ class EnergyOrbitCard extends HTMLElement {
     const batteryPercent = this._getBatteryLevel();
     const batteryPower = this._getBatteryPower();
     const solar = this._getSolarProduction();
+    
+    let batteryPowerMax = this.config.battery_power_max;
+    if (this.config.battery_power_max_entity) {
+        const dynamicMax = this._getEntityValue(this.config.battery_power_max_entity);
+        if (dynamicMax > 0) batteryPowerMax = dynamicMax;
+    }
+
     const grid = this._getEntityValue(this.config.grid_entity);
     const gridAbs = Math.abs(grid);
     const isInjection = grid < 0;
@@ -527,7 +539,7 @@ class EnergyOrbitCard extends HTMLElement {
 
     if (this.config.enable_breathing && Math.abs(batteryPower) > 50) {
         batIconWrapper.classList.add('breathing');
-        const intensity = Math.min(0.8, Math.max(0.2, Math.abs(batteryPower) / this.config.battery_power_max));
+        const intensity = Math.min(0.8, Math.max(0.2, Math.abs(batteryPower) / batteryPowerMax));
         batIconWrapper.style.setProperty('--halo-intensity', intensity);
     } else {
         batIconWrapper.classList.remove('breathing');
@@ -646,7 +658,7 @@ class EnergyOrbitCard extends HTMLElement {
     const signedBatteryPower = isCharging ? -Math.abs(batteryPower) : Math.abs(batteryPower);
     this._updateGauge('battery-level-gauge', Math.max(0, Math.min(100, batteryPercent)), 88);
     this._updateBidirectionalGauge('grid-gauge', grid, this.config.grid_max, 72, isInjection);
-    this._updateBidirectionalGauge('battery-power-gauge', signedBatteryPower, this.config.battery_power_max, 63, !isCharging);
+    this._updateBidirectionalGauge('battery-power-gauge', signedBatteryPower, batteryPowerMax, 63, !isCharging);
     this._updateGauge('solar-gauge', Math.min(100, (solar / this.config.solar_max)*100), 54);
 
     // DYNAMIC LABELS
@@ -807,6 +819,7 @@ class EnergyOrbitCardEditor extends HTMLElement {
       { name: 'battery_entities', selector: { entity: { domain: 'sensor', multiple: true } } },
       { name: 'battery_power_entities', selector: { entity: { domain: 'sensor', multiple: true } } },
       { name: 'solar_entities', selector: { entity: { domain: 'sensor', multiple: true } } },
+      { name: 'battery_power_max_entity', selector: { entity: { domain: 'sensor' } } },
       { name: 'operation_state_entity', selector: { entity: {} } },
       { name: 'zendure_mode_entity', selector: { entity: { domain: 'select' } } },
       { name: 'tempo_today_entity', selector: { entity: {} } },
@@ -861,6 +874,7 @@ class EnergyOrbitCardEditor extends HTMLElement {
         grid_entity: this._t('editor_grid_entity'),
         battery_entities: this._t('editor_battery_entities'),
         battery_power_entities: this._t('editor_battery_power_entities'),
+        battery_power_max_entity: this._t('editor_battery_power_max_entity'),
         solar_entities: this._t('editor_solar_entities'),
         operation_state_entity: this._t('editor_operation_state_entity'),
         zendure_mode_entity: this._t('editor_zendure_mode_entity'),
