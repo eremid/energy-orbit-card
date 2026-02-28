@@ -320,8 +320,8 @@ class EnergyOrbitCard extends HTMLElement {
         .stat-main-line { display: flex; align-items: baseline; gap: 5px; white-space: nowrap; }
         .stat-value { font-size: 1.2em; font-weight: 700; color: var(--stat-color); line-height: 1; }
         .stat-unit { font-size: 0.8em; opacity: 0.7; }
-        .stat-label { font-size: 0.7em; opacity: 0.5; text-transform: uppercase; margin-left: auto; } #battery-label { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); }
-        .stat-subtext { font-size: 0.7em; opacity: 0.6; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .stat-label { font-size: 0.7em; opacity: 0.5; text-transform: uppercase; margin-left: auto; }
+        .stat-subtext { font-size: 0.7em; opacity: 0.6; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: right; }
 
         .solar-details { margin-top: 5px; padding-top: 5px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8em; }
         .solar-detail-row { display: flex; justify-content: space-between; margin-bottom: 2px; }
