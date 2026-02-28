@@ -7,7 +7,7 @@
 A custom Lovelace card for Home Assistant to monitor your home energy flows through animated concentric rings.
 Designed for setups with solar panels, a home battery (perfect for Zendure) and a grid connection (EDF Tempo supported).
 
-![Energy Orbit Card Preview](https://raw.githubusercontent.com/eremid/energy-orbit-card/main/preview.png)
+![Energy Orbit Card Charge Mode](https://raw.githubusercontent.com/eremid/energy-orbit-card/main/charge-mode.png)
 
 ## ✨ Features
 
@@ -35,6 +35,9 @@ All rings start at the **top (12 o'clock)** for a cleaner, unified look.
 
 ![Energy Orbit Card Discharge Mode](https://raw.githubusercontent.com/eremid/energy-orbit-card/main/discharge-mode.png)
 *Example: Card in Discharge mode (Battery power flowing clockwise).*
+
+![Energy Orbit Card Charge Mode](https://raw.githubusercontent.com/eremid/energy-orbit-card/main/charge-mode.png)
+*Example: Card in Charge mode (Battery power flowing counter-clockwise).*
 
 ## 📦 Installation
 
