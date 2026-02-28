@@ -559,8 +559,13 @@ class EnergyOrbitCard extends HTMLElement {
 
     const batAutoEl = this.shadowRoot.getElementById('battery-autonomy');
     if (batAutoEl) {
+        const isBidi = this.config.bidirectional_mode === 'bidirectional';
+        const exportOver20 = isInjection && (gridAbs / this.config.grid_max > 0.2);
+        const chargeOver20 = isCharging && (Math.abs(batteryPower) / this.config.battery_power_max > 0.2);
+
         // Hide subtext if battery > 70% to avoid overlap with the outer ring on desktop
-        if (batteryPercent > 70) {
+        // Or if gauges overlap in bidirectional mode (Export or Charge > 20%)
+        if (batteryPercent > 70 || (isBidi && (exportOver20 || chargeOver20))) {
             batAutoEl.textContent = "";
         } else if (this._batteryMode === 'percent') {
             if (this.config.battery_capacity_wh && Math.abs(batteryPower) > 10) {
