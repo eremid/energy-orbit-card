@@ -1,6 +1,5 @@
 {
   "name": "Energy Orbit Card",
-  "render": "lovelace",
   "filename": "energy-orbit-card.js",
   "country": "FR"
 }
