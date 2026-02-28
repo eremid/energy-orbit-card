@@ -664,9 +664,14 @@ class EnergyOrbitCard extends HTMLElement {
             }
         };
 
+        let batteryLabel = this._getBatteryOperationLabel();
+        if (batteryLabel === this._t('battery')) {
+            batteryLabel = isCharging ? this._t('charging') : this._t('discharging');
+        }
+
         updateLabel('label-battery-level', this._t('battery'), false);
         updateLabel('label-grid', grid >= 0 ? this._t('import') : this._t('export'), grid < 0);
-        updateLabel('label-battery-power', isCharging ? this._t('charging') : this._t('discharging'), isCharging);
+        updateLabel('label-battery-power', batteryLabel, isCharging);
         updateLabel('label-solar', this._t('production'), false);
     }
 
