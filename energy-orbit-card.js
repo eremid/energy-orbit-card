@@ -563,10 +563,7 @@ class EnergyOrbitCard extends HTMLElement {
 
     const batAutoEl = this.shadowRoot.getElementById('battery-autonomy');
     if (batAutoEl) {
-        // Hide subtext if battery > 70% to avoid overlap with the outer ring on desktop
-        if (batteryPercent > 70) {
-            batAutoEl.textContent = "";
-        } else if (this._batteryMode === 'percent') {
+        if (this._batteryMode === 'percent') {
             if (this.config.battery_capacity_wh && Math.abs(batteryPower) > 10) {
                 let text = "";
                 const capacity = this.config.battery_capacity_wh;
