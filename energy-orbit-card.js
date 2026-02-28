@@ -271,13 +271,17 @@ class EnergyOrbitCard extends HTMLElement {
         }
 
         .main-layout { display: grid; grid-template-columns: 1fr; position: relative; min-height: 260px; align-items: center; }
-        .stats-col { display: flex; flex-direction: column; gap: 10px; z-index: 2; position: relative; padding-top: 0; }
+        .stats-col { 
+            display: flex; flex-direction: column; gap: 10px; z-index: 2; position: relative; padding-top: 0; 
+            -webkit-mask-image: radial-gradient(circle at var(--gauge-hole-x, 50%) 50%, transparent 100px, black 101px);
+            mask-image: radial-gradient(circle at var(--gauge-hole-x, 50%) 50%, transparent 100px, black 101px);
+        }
         .gauge-col { display: flex; justify-content: center; align-items: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none; width: 100%; height: 100%; }
 
         @media (max-width: 500px) {
           ha-card { padding: 8px 12px 12px 12px !important; }
           .main-layout { min-height: 230px !important; }
-          .stats-col { width: 50% !important; }
+          .stats-col { width: 50% !important; --gauge-hole-x: 150%; }
           .gauge-col { left: 75% !important; }
           .gauge-wrapper { width: 220px !important; height: 220px !important; }
           .stat-label { display: none !important; }
