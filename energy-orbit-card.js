@@ -8,18 +8,22 @@ const eocTranslations = {
 
     editor_grid_entity: "Grid Entity", editor_battery_entities: "Battery Level Entities",
     editor_battery_power_entities: "Battery Power Entities", editor_solar_entities: "Solar Production Entities",
-    editor_operation_state_entity: "Battery Operation State Entity", editor_zendure_mode_entity: "Zendure Mode (select)",
-    editor_tempo_today_entity: "Tempo Color Today", editor_grid_max: "Grid Max (W)", editor_solar_max: "Solar Max (W)",
-    editor_battery_max: "Battery Max (%)", editor_battery_power_max: "Battery Power Max (W)",
-    editor_battery_power_max_entity: "Battery Power Max Entity (Zendure)",
-    editor_battery_capacity_wh: "Battery Capacity (Wh)", editor_grid_warning_threshold: "Grid Warning Threshold (W)",
-    editor_grid_alert_threshold: "Grid Alert Threshold (W)", editor_bidirectional_mode: "Gauge Mode",
-    editor_initial_battery_mode: "Initial Battery Display", editor_initial_solar_mode: "Initial Solar Display",
+    editor_operation_state_entity: "Operation State Entity", editor_zendure_mode_entity: "Zendure Mode (select)",
+    editor_tempo_today_entity: "Tempo Today", editor_tempo_tomorrow_entity: "Tempo Tomorrow",
+    editor_grid_max: "Grid Max (W)", editor_solar_max: "Solar Max (W)",
+    editor_battery_max: "Battery Max (%)", 
+    editor_battery_power_max: "Fixed Max Battery Power (W)",
+    editor_battery_power_max_entity: "Dynamic Max Battery Power Entity (Zendure)",
+    editor_battery_capacity_wh: "Battery Capacity (Wh)", 
+    editor_grid_warning_threshold: "Grid Warning Threshold (W)",
+    editor_grid_alert_threshold: "Grid Alert Threshold (W)", 
+    editor_bidirectional_mode: "Gauge Mode",
     editor_show_zendure_mode: "Show Zendure Mode", editor_show_tempo: "Show Tempo",
     editor_enable_breathing: "Breathing Animation", editor_gauge_opacity: "Orbit Opacity",
     editor_show_ring_labels: "Show Ring Labels",
-    editor_mobile_gauge_size: "Mobile Orbit Size (px)", opt_bidirectional: "Bidirectional", opt_normal: "Normal",
-    opt_percent: "Percent", opt_power: "Power", opt_total: "Total", opt_detail: "Detail"
+    opt_bidirectional: "Dynamic (Two directions)", opt_normal: "Standard (Clockwise)",
+    opt_percent: "Percent", opt_power: "Power", opt_total: "Total", opt_detail: "Detail",
+    header_entities: "Entities", header_settings: "Max Settings & Thresholds", header_display: "Display Options"
   },
   fr: {
     network: "RÉSEAU", charging: "CHARGE", discharging: "DÉCHARGE", standby: "VEILLE",
@@ -29,18 +33,22 @@ const eocTranslations = {
 
     editor_grid_entity: "Entité réseau (grid)", editor_battery_entities: "Entités niveau batterie",
     editor_battery_power_entities: "Entités puissance batterie", editor_solar_entities: "Entités production solaire",
-    editor_operation_state_entity: "État opérationnel batterie", editor_zendure_mode_entity: "Mode Zendure (select)",
-    editor_tempo_today_entity: "Couleur Tempo EDF", editor_grid_max: "Max réseau (W)", editor_solar_max: "Max solaire (W)",
-    editor_battery_max: "Max batterie (%)", editor_battery_power_max: "Max puissance batterie (W)",
-    editor_battery_power_max_entity: "Entité puissance max batterie (Zendure)",
-    editor_battery_capacity_wh: "Capacité batterie (Wh)", editor_grid_warning_threshold: "Seuil alerte réseau (W)",
-    editor_grid_alert_threshold: "Seuil critique réseau (W)", editor_bidirectional_mode: "Mode de la jauge",
-    editor_initial_battery_mode: "Affichage batterie initial", editor_initial_solar_mode: "Affichage solaire initial",
+    editor_operation_state_entity: "État opérationnel", editor_zendure_mode_entity: "Mode Zendure (select)",
+    editor_tempo_today_entity: "Tempo Aujourd'hui", editor_tempo_tomorrow_entity: "Tempo Demain",
+    editor_grid_max: "Max Réseau (W)", editor_solar_max: "Max Solaire (W)",
+    editor_battery_max: "Max Batterie (%)", 
+    editor_battery_power_max: "Puissance Batterie Max - Fixe (W)",
+    editor_battery_power_max_entity: "Puissance Batterie Max - Entité (Zendure)",
+    editor_battery_capacity_wh: "Capacité Batterie (Wh)", 
+    editor_grid_warning_threshold: "Seuil Alerte Réseau (W)",
+    editor_grid_alert_threshold: "Seuil Critique Réseau (W)", 
+    editor_bidirectional_mode: "Mode de la jauge",
     editor_show_zendure_mode: "Afficher mode Zendure", editor_show_tempo: "Afficher Tempo",
     editor_enable_breathing: "Animation respiration", editor_gauge_opacity: "Opacité orbites",
     editor_show_ring_labels: "Afficher labels anneaux",
-    editor_mobile_gauge_size: "Taille orbite mobile (px)", opt_bidirectional: "Bidirectionnel", opt_normal: "Normal",
-    opt_percent: "Pourcentage", opt_power: "Puissance", opt_total: "Total", opt_detail: "Détail"
+    opt_bidirectional: "Dynamique (Deux sens)", opt_normal: "Standard (Sens horaire)",
+    opt_percent: "Pourcentage", opt_power: "Puissance", opt_total: "Total", opt_detail: "Détail",
+    header_entities: "Entités", header_settings: "Réglages Max & Seuils", header_display: "Options d'affichage"
   },
   es: {
     network: "RED", charging: "CARGANDO", discharging: "DESCARGANDO", standby: "ESPERA",
@@ -48,20 +56,24 @@ const eocTranslations = {
     loading: "Cargando...", z_charge: "Carga Prioritaria", z_discharge: "Descarga Prioritaria", z_off: "Apagado",
     import: "IMPORT", export: "EXPORT",
 
-    editor_grid_entity: "Entidad de red (grid)", editor_battery_entities: "Entidades de nivel de batería",
-    editor_battery_power_entities: "Entidades de potencia de batería", editor_solar_entities: "Entidades de producción solar",
-    editor_operation_state_entity: "Entidad de estado operativo de batería", editor_zendure_mode_entity: "Modo Zendure (select)",
-    editor_tempo_today_entity: "Color Tempo Hoy", editor_grid_max: "Max red (W)", editor_solar_max: "Max solar (W)",
-    editor_battery_max: "Max batería (%)", editor_battery_power_max: "Max potencia batería (W)",
-    editor_battery_power_max_entity: "Entidad potencia máx batería (Zendure)",
-    editor_battery_capacity_wh: "Capacidad de batería (Wh)", editor_grid_warning_threshold: "Umbral advertencia red (W)",
-    editor_grid_alert_threshold: "Umbral crítico red (W)", editor_bidirectional_mode: "Modo de indicador",
-    editor_initial_battery_mode: "Pantalla inicial de batería", editor_initial_solar_mode: "Pantalla inicial solar",
+    editor_grid_entity: "Entidad de red (grid)", editor_battery_entities: "Entidades nivel de batterie",
+    editor_battery_power_entities: "Entidades potencia de batterie", editor_solar_entities: "Entidades producción solar",
+    editor_operation_state_entity: "Estado operativo", editor_zendure_mode_entity: "Modo Zendure (select)",
+    editor_tempo_today_entity: "Tempo Hoy", editor_tempo_tomorrow_entity: "Tempo Mañana",
+    editor_grid_max: "Max Red (W)", editor_solar_max: "Max Solar (W)",
+    editor_battery_max: "Max Batería (%)", 
+    editor_battery_power_max: "Potencia Batería Max - Fija (W)",
+    editor_battery_power_max_entity: "Potencia Batería Max - Entidad (Zendure)",
+    editor_battery_capacity_wh: "Capacidad (Wh)", 
+    editor_grid_warning_threshold: "Umbral Advertencia (W)",
+    editor_grid_alert_threshold: "Umbral Crítico (W)", 
+    editor_bidirectional_mode: "Modo de indicador",
     editor_show_zendure_mode: "Mostrar modo Zendure", editor_show_tempo: "Mostrar Tempo",
     editor_enable_breathing: "Animación de respiración", editor_gauge_opacity: "Opacidad de órbitas",
     editor_show_ring_labels: "Mostrar etiquetas de anillos",
-    editor_mobile_gauge_size: "Tamaño órbita móvil (px)", opt_bidirectional: "Bidireccional", opt_normal: "Normal",
-    opt_percent: "Porcentaje", opt_power: "Potencia", opt_total: "Total", opt_detail: "Detalle"
+    opt_bidirectional: "Dinámico (Dos sentidos)", opt_normal: "Estándar (Sentido horario)",
+    opt_percent: "Porcentaje", opt_power: "Potencia", opt_total: "Total", opt_detail: "Detalle",
+    header_entities: "Entidades", header_settings: "Ajustes Máximos", header_display: "Opciones de Visualización"
   },
   de: {
     network: "NETZ", charging: "LÄDT", discharging: "ENTLÄDT", standby: "STANDBY",
@@ -71,18 +83,22 @@ const eocTranslations = {
 
     editor_grid_entity: "Netz-Entität (grid)", editor_battery_entities: "Batteriestand-Entitäten",
     editor_battery_power_entities: "Batterieleistung-Entitäten", editor_solar_entities: "Solarproduktion-Entitäten",
-    editor_operation_state_entity: "Batteriestatus-Entität", editor_zendure_mode_entity: "Zendure-Modus (select)",
-    editor_tempo_today_entity: "Tempo Farbe Heute", editor_grid_max: "Max Netz (W)", editor_solar_max: "Max Solar (W)",
-    editor_battery_max: "Max Batterie (%)", editor_battery_power_max: "Max Batterieleistung (W)",
-    editor_battery_power_max_entity: "Entität maximale Batterieleistung (Zendure)",
-    editor_battery_capacity_wh: "Batteriekapazität (Wh)", editor_grid_warning_threshold: "Netz-Warnschwelle (W)",
-    editor_grid_alert_threshold: "Netz-Kritische Schwelle (W)", editor_bidirectional_mode: "Anzeigemodus",
-    editor_initial_battery_mode: "Initiale Batterieanzeige", editor_initial_solar_mode: "Initiale Solaranzeige",
+    editor_operation_state_entity: "Batteriestatus", editor_zendure_mode_entity: "Zendure-Modus (select)",
+    editor_tempo_today_entity: "Tempo Heute", editor_tempo_tomorrow_entity: "Tempo Morgen",
+    editor_grid_max: "Max Netz (W)", editor_solar_max: "Max Solar (W)",
+    editor_battery_max: "Max Batterie (%)", 
+    editor_battery_power_max: "Max Batterieleistung - Fix (W)",
+    editor_battery_power_max_entity: "Max Batterieleistung - Entität (Zendure)",
+    editor_battery_capacity_wh: "Capacité (Wh)", 
+    editor_grid_warning_threshold: "Netz-Warnschwelle (W)",
+    editor_grid_alert_threshold: "Netz-Kritische Schwelle (W)", 
+    editor_bidirectional_mode: "Anzeigemodus",
     editor_show_zendure_mode: "Zendure-Modus anzeigen", editor_show_tempo: "Tempo anzeigen",
     editor_enable_breathing: "Atmungsanimation", editor_gauge_opacity: "Orbit-Deckkraft",
     editor_show_ring_labels: "Ringbeschriftungen anzeigen",
-    editor_mobile_gauge_size: "Mobile Orbitgröße (px)", opt_bidirectional: "Bidirektional", opt_normal: "Normal",
-    opt_percent: "Prozent", opt_power: "Leistung", opt_total: "Gesamt", opt_detail: "Detail"
+    opt_bidirectional: "Dynamisch (Zwei Richtungen)", opt_normal: "Standard (Im Uhrzeigersinn)",
+    opt_percent: "Prozent", opt_power: "Leistung", opt_total: "Gesamt", opt_detail: "Detail",
+    header_entities: "Entitäten", header_settings: "Max-Einstellungen", header_display: "Anzeigeoptionen"
   }
 };
 
@@ -124,40 +140,57 @@ class EnergyOrbitCard extends HTMLElement {
 
   setConfig(config) {
     if (!config.grid_entity) throw new Error('Grid Entity required');
+    
+    // Clean up potential nested headers or previous alignment hacks
+    const cleanConfig = { ...config };
+    delete cleanConfig.header_entities;
+    delete cleanConfig.header_settings;
+    delete cleanConfig.header_display;
+    delete cleanConfig.battery_power_max_title;
+    delete cleanConfig.battery_power_max_entity_title;
+    delete cleanConfig.mobile_gauge_size;
+    
+    if (Array.isArray(cleanConfig.battery_entities)) cleanConfig.battery_entities = cleanConfig.battery_entities.filter(e => e !== null);
+    if (Array.isArray(cleanConfig.battery_power_entities)) cleanConfig.battery_power_entities = cleanConfig.battery_power_entities.filter(e => e !== null);
+    if (Array.isArray(cleanConfig.solar_entities)) cleanConfig.solar_entities = cleanConfig.solar_entities.filter(e => e !== null);
+
     this.config = {
-      ...config,
-      battery_entities: config.battery_entities || [],
-      solar_entities: config.solar_entities || [],
-      battery_power_entities: config.battery_power_entities || [],
-      battery_max: this._sanitizeNumber(config.battery_max, 100),
-      solar_max: this._sanitizeNumber(config.solar_max, 5000),
-      grid_max: this._sanitizeNumber(config.grid_max, 6000),
-      battery_power_max: this._sanitizeNumber(config.battery_power_max, 2400),
-      battery_power_max_entity: config.battery_power_max_entity,
-      bidirectional_mode: (config.bidirectional_mode === 'import_only' || config.bidirectional_mode === 'export_only' || config.bidirectional_mode === 'normal') ? 'normal' : 'bidirectional',
+      ...cleanConfig,
+      battery_entities: cleanConfig.battery_entities || [],
+      solar_entities: cleanConfig.solar_entities || [],
+      battery_power_entities: cleanConfig.battery_power_entities || [],
+      battery_max: this._sanitizeNumber(cleanConfig.battery_max, 100),
+      solar_max: this._sanitizeNumber(cleanConfig.solar_max, 5000),
+      grid_max: this._sanitizeNumber(cleanConfig.grid_max, 6000),
+      battery_power_max: this._sanitizeNumber(cleanConfig.battery_power_max, 2400),
+      battery_power_max_entity: cleanConfig.battery_power_max_entity,
+      bidirectional_mode: (cleanConfig.bidirectional_mode === 'import_only' || cleanConfig.bidirectional_mode === 'export_only' || cleanConfig.bidirectional_mode === 'normal') ? 'normal' : 'bidirectional',
       
-      initial_battery_mode: config.initial_battery_mode || 'percent',
-      initial_solar_mode: config.initial_solar_mode || 'total',
-      battery_capacity_wh: this._sanitizeNumber(config.battery_capacity_wh, 1920),
-      grid_warning_threshold: this._sanitizeNumber(config.grid_warning_threshold, 6000),
-      grid_alert_threshold: this._sanitizeNumber(config.grid_alert_threshold, 9000),
-      show_zendure_mode: config.show_zendure_mode !== false,
-      show_tempo: config.show_tempo !== false,
-      show_ring_labels: config.show_ring_labels === true,
-      gauge_opacity: this._sanitizeNumber(config.gauge_opacity !== undefined ? config.gauge_opacity : 0.8, 0.8),
-      enable_breathing: config.enable_breathing !== false,
-      mobile_gauge_size: this._sanitizeNumber(config.mobile_gauge_size, 160),
+      battery_capacity_wh: this._sanitizeNumber(cleanConfig.battery_capacity_wh, 1920),
+      grid_warning_threshold: this._sanitizeNumber(cleanConfig.grid_warning_threshold, 6000),
+      grid_alert_threshold: this._sanitizeNumber(cleanConfig.grid_alert_threshold, 9000),
+      show_zendure_mode: cleanConfig.show_zendure_mode !== false,
+      show_tempo: cleanConfig.show_tempo !== false,
+      show_ring_labels: cleanConfig.show_ring_labels === true,
+      gauge_opacity: this._sanitizeNumber(cleanConfig.gauge_opacity !== undefined ? cleanConfig.gauge_opacity : 0.8, 0.8),
+      enable_breathing: cleanConfig.enable_breathing !== false,
+      mobile_gauge_size: 160,
       colors: {
-        grid_import: this._sanitizeColor(config.grid_import_color || config.colors?.grid_import, '#3498db'),
-        grid_export: this._sanitizeColor(config.grid_export_color || config.colors?.grid_export, '#2ecc71'),
-        solar: this._sanitizeColor(config.solar_color || config.colors?.solar, '#FFD700'),
-        battery: this._sanitizeColor(config.battery_color || config.colors?.battery, '#FF6B35'),
-        battery_charge: this._sanitizeColor(config.battery_charge_color || config.colors?.battery_charge, '#e74c3c'),
-        battery_discharge: this._sanitizeColor(config.battery_discharge_color || config.colors?.battery_discharge, '#2ecc71'),
+        grid_import: this._sanitizeColor(cleanConfig.grid_import_color || cleanConfig.colors?.grid_import, '#3498db'),
+        grid_export: this._sanitizeColor(cleanConfig.grid_export_color || cleanConfig.colors?.grid_export, '#2ecc71'),
+        solar: this._sanitizeColor(cleanConfig.solar_color || cleanConfig.colors?.solar, '#FFD700'),
+        battery: this._sanitizeColor(cleanConfig.battery_color || cleanConfig.colors?.battery, '#FF6B35'),
+        battery_charge: this._sanitizeColor(cleanConfig.battery_charge_color || cleanConfig.colors?.battery_charge, '#e74c3c'),
+        battery_discharge: this._sanitizeColor(cleanConfig.battery_discharge_color || cleanConfig.colors?.battery_discharge, '#2ecc71'),
       }
     };
-    this._batteryMode = this.config.initial_battery_mode;
-    this._solarMode = this.config.initial_solar_mode;
+    this._batteryMode = localStorage.getItem(this._getStorageKey('battery_mode', this.config.grid_entity)) || 'percent';
+    this._solarMode = localStorage.getItem(this._getStorageKey('solar_mode', this.config.grid_entity)) || 'total';
+  }
+
+  _getStorageKey(suffix, gridEntity) {
+    const base = gridEntity || this.config?.grid_entity || 'default';
+    return `eoc_${base.replace(/\./g, '_')}_${suffix}`;
   }
 
   set hass(hass) {
@@ -177,12 +210,17 @@ class EnergyOrbitCard extends HTMLElement {
   }
 
   _toggleBatteryMode() {
-    this._batteryMode = this._batteryMode === 'percent' ? 'power' : 'percent';
+    if (this._batteryMode === 'percent') this._batteryMode = 'power';
+    else if (this._batteryMode === 'power') this._batteryMode = 'minimal';
+    else this._batteryMode = 'percent';
+    
+    localStorage.setItem(this._getStorageKey('battery_mode'), this._batteryMode);
     this._updateContent();
   }
 
   _toggleSolarMode() {
     this._solarMode = this._solarMode === 'total' ? 'detail' : 'total';
+    localStorage.setItem(this._getStorageKey('solar_mode'), this._solarMode);
     this._updateContent();
   }
 
@@ -285,7 +323,12 @@ class EnergyOrbitCard extends HTMLElement {
           .gauge-col { left: 75% !important; }
           .gauge-wrapper { width: 220px !important; height: 220px !important; }
           .stat-label { display: none !important; }
-          .stat-subtext, .solar-details { font-size: 0.65em !important; }
+          
+          .stat-content { flex-direction: column; align-items: flex-start !important; justify-content: center; gap: 0 !important; }
+          .stat-right-info { position: static !important; align-items: flex-start !important; text-align: left !important; width: 100%; }
+          .stat-subtext { font-size: 0.6em !important; text-align: left !important; }
+          .solar-details { font-size: 0.6em !important; margin-top: 2px !important; min-width: 0 !important; width: 100%; }
+          
           .zendure-mode { margin-top: 4px !important; }
           .tempo-container { margin-top: 4px !important; padding-top: 4px !important; }
         }
@@ -294,7 +337,7 @@ class EnergyOrbitCard extends HTMLElement {
           background: var(--input-fill-color, rgba(128, 128, 128, 0.1));
           border-radius: 12px; padding: 8px 12px; display: flex; align-items: center; gap: 10px;
           border: 1px solid var(--divider-color, rgba(255,255,255,0.12));
-          transition: all 0.3s ease; position: relative; min-height: 50px; overflow: hidden;
+          transition: all 0.3s ease; position: relative; min-height: 54px;
         }
         .stat-item.clickable { cursor: pointer; }
         /* ROUNDED BAR */
@@ -316,19 +359,24 @@ class EnergyOrbitCard extends HTMLElement {
         .stat-icon.breathing { animation: breathe 3s ease-in-out infinite; }
         .stat-icon svg { width: 16px; height: 16px; z-index: 1; }
 
-        .stat-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
-        .stat-main-line { display: flex; align-items: baseline; gap: 5px; white-space: nowrap; }
-        .stat-value { font-size: 1.2em; font-weight: 700; color: var(--stat-color); line-height: 1; }
+        .stat-content { flex: 1; display: flex; align-items: center; gap: 10px; justify-content: space-between; overflow: hidden; }
+        .stat-main-line { display: flex; align-items: center; gap: 5px; white-space: nowrap; flex-shrink: 0; line-height: 1.1; }
+        .stat-value { font-size: 1.2em; font-weight: 700; color: var(--stat-color); }
         .stat-unit { font-size: 0.8em; opacity: 0.7; }
-        .stat-label { font-size: 0.7em; opacity: 0.5; text-transform: uppercase; margin-left: auto; }
+        
+        .stat-right-info {
+            display: flex; flex-direction: column; justify-content: center; align-items: flex-end;
+            gap: 4px; text-align: right; flex: 1;
+        }
+        .stat-right-info:empty { display: none; }
+        .stat-label { font-size: 0.7em; opacity: 0.5; text-transform: uppercase; }
         .stat-subtext { 
-            position: absolute; bottom: 5px; right: 12px;
             font-size: 0.7em; opacity: 0.6; white-space: nowrap; 
-            text-align: right; pointer-events: none;
+            pointer-events: none;
         }
         .stat-subtext:empty { display: none; }
 
-        .solar-details { margin-top: 5px; padding-top: 5px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8em; }
+        .solar-details { margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.8em; min-width: 100px; }
         .solar-detail-row { display: flex; justify-content: space-between; margin-bottom: 2px; }
 
         .gauge-wrapper { width: 240px; height: 240px; position: relative; filter: drop-shadow(0 8px 24px var(--ha-card-box-shadow, rgba(0,0,0,0.2))); transition: all 0.3s ease; }
@@ -367,21 +415,30 @@ class EnergyOrbitCard extends HTMLElement {
                 <div class="stat-item" id="grid-stat" style="--stat-color: ${c.grid_import}; --stat-bg: ${c.grid_import}26;">
                   <div class="stat-icon"><svg viewBox="0 0 24 24" fill="${c.grid_import}" id="grid-icon"><path d="${gridIconPath}"/></svg></div>
                   <div class="stat-content">
-                    <div class="stat-main-line"><span class="stat-value" id="grid-stat-value">--</span><span class="stat-unit">W</span><span class="stat-label">${this._t('network')}</span></div>
+                    <div class="stat-main-line"><span class="stat-value" id="grid-stat-value">--</span><span class="stat-unit">W</span></div>
+                    <div class="stat-right-info">
+                        <div class="stat-label">${this._t('network')}</div>
+                    </div>
                   </div>
                 </div>
                 <div class="stat-item clickable" id="battery-stat-item" style="--stat-color: ${c.battery}; --stat-bg: ${c.battery}26;">
                   <div class="stat-icon" id="battery-icon-wrapper" style="--halo-rgb: 255,107,53;"><svg viewBox="0 0 24 24" fill="${c.battery}" id="battery-icon-svg"><path d="${batteryIconPath}"/></svg></div>
                   <div class="stat-content">
-                    <div class="stat-main-line"><span class="stat-value" id="battery-value">--</span><span class="stat-unit" id="battery-unit">%</span><span class="stat-label" id="battery-label">${this._t('battery')}</span></div>
-                    <div class="stat-subtext" id="battery-autonomy"></div>
+                    <div class="stat-main-line"><span class="stat-value" id="battery-value">--</span><span class="stat-unit" id="battery-unit">%</span></div>
+                    <div class="stat-right-info">
+                        <div class="stat-label" id="battery-label">${this._t('battery')}</div>
+                        <div class="stat-subtext" id="battery-autonomy"></div>
+                    </div>
                   </div>
                 </div>
                 <div class="stat-item clickable" id="solar-stat-item" style="--stat-color: ${c.solar}; --stat-bg: ${c.solar}26;">
                   <div class="stat-icon breathing" id="solar-icon-wrapper" style="--halo-rgb: 255,215,0;"><svg viewBox="0 0 24 24" fill="${c.solar}"><path d="${this._getMdiPath('solar')}"/></svg></div>
                   <div class="stat-content">
-                    <div class="stat-main-line"><span class="stat-value" id="solar-value">--</span><span class="stat-unit">W</span><span class="stat-label">${this._t('production')}</span></div>
-                    <div id="solar-details-container" class="solar-details" style="display: none;"></div>
+                    <div class="stat-main-line"><span class="stat-value" id="solar-value">--</span><span class="stat-unit">W</span></div>
+                    <div class="stat-right-info">
+                        <div class="stat-label">${this._t('production')}</div>
+                        <div id="solar-details-container" class="solar-details" style="display: none;"></div>
+                    </div>
                   </div>
                 </div>
             </div>
@@ -487,7 +544,8 @@ class EnergyOrbitCard extends HTMLElement {
     const batteryPower = this._getBatteryPower();
     const solar = this._getSolarProduction();
     
-    let batteryPowerMax = this.config.battery_power_max;
+    // Battery Power Max Logic: Entity > Config > Default (2400)
+    let batteryPowerMax = this.config.battery_power_max || 2400;
     if (this.config.battery_power_max_entity) {
         const dynamicMax = this._getEntityValue(this.config.battery_power_max_entity);
         if (dynamicMax > 0) batteryPowerMax = dynamicMax;
@@ -569,12 +627,12 @@ class EnergyOrbitCard extends HTMLElement {
     const batValEl = this.shadowRoot.getElementById('battery-value');
     const batUnitEl = this.shadowRoot.getElementById('battery-unit');
     if(batValEl) {
-        if(this._batteryMode === 'percent') {
-            batValEl.textContent = batteryPercent.toFixed(0);
-            batUnitEl.textContent = '%';
-        } else {
+        if(this._batteryMode === 'power') {
             batValEl.textContent = Math.abs(batteryPower).toFixed(0);
             batUnitEl.textContent = 'W';
+        } else {
+            batValEl.textContent = batteryPercent.toFixed(0);
+            batUnitEl.textContent = '%';
         }
     }
 
@@ -597,18 +655,27 @@ class EnergyOrbitCard extends HTMLElement {
             } else {
                 batAutoEl.textContent = "";
             }
-        } else {
-            const parts = [];
-            if (this.config.battery_power_entities && this.config.battery_power_entities.length > 0) {
-                this.config.battery_power_entities.forEach((e) => {
-                    const v = this._getEntityValue(e);
+        } else if (this._batteryMode === 'power') {
+            const opState = this.config.operation_state_entity ? this._hass.states[this.config.operation_state_entity]?.state?.toLowerCase() : null;
+            const isIdleOrOff = opState === '0' || opState === 'idle' || opState === '3' || opState === 'off' || opState === 'standby' || opState === 'waiting';
+
+            if (isIdleOrOff || Math.abs(batteryPower) < 1) {
+                batAutoEl.textContent = "";
+            } else {
+                const parts = [];
+                if (this.config.battery_power_entities && this.config.battery_power_entities.length > 0) {
+                    this.config.battery_power_entities.forEach((e) => {
+                        const v = this._getEntityValue(e);
+                        parts.push(`${Math.round(Math.abs(v))}W`);
+                    });
+                } else if (this.config.battery_power_entity) {
+                    const v = this._getEntityValue(this.config.battery_power_entity);
                     parts.push(`${Math.round(Math.abs(v))}W`);
-                });
-            } else if (this.config.battery_power_entity) {
-                const v = this._getEntityValue(this.config.battery_power_entity);
-                parts.push(`${Math.round(Math.abs(v))}W`);
+                }
+                batAutoEl.textContent = parts.join(' + ');
             }
-            batAutoEl.textContent = parts.join(' + ');
+        } else {
+            batAutoEl.textContent = "";
         }
     }
 
@@ -820,40 +887,44 @@ class EnergyOrbitCardEditor extends HTMLElement {
 
   _getSchema() {
     return [
-      { name: 'grid_entity', required: true, selector: { entity: { domain: 'sensor' } } },
-      { name: 'battery_entities', selector: { entity: { domain: 'sensor', multiple: true } } },
-      { name: 'battery_power_entities', selector: { entity: { domain: 'sensor', multiple: true } } },
-      { name: 'solar_entities', selector: { entity: { domain: 'sensor', multiple: true } } },
-      { name: 'battery_power_max_entity', selector: { entity: { domain: 'sensor' } } },
-      { name: 'operation_state_entity', selector: { entity: {} } },
-      { name: 'zendure_mode_entity', selector: { entity: { domain: 'select' } } },
-      { name: 'tempo_today_entity', selector: { entity: {} } },
-      { type: 'grid', name: '', schema: [
-          { name: 'grid_max', selector: { number: { min: 100, max: 20000, step: 100, mode: 'box', unit_of_measurement: 'W' } } },
-          { name: 'solar_max', selector: { number: { min: 100, max: 20000, step: 100, mode: 'box', unit_of_measurement: 'W' } } },
-          { name: 'battery_max', selector: { number: { min: 1, max: 100, step: 1, mode: 'box', unit_of_measurement: '%' } } },
-          { name: 'battery_power_max', selector: { number: { min: 100, max: 10000, step: 100, mode: 'box', unit_of_measurement: 'W' } } },
-          { name: 'battery_capacity_wh', selector: { number: { min: 100, max: 50000, step: 100, mode: 'box', unit_of_measurement: 'Wh' } } },
-          { name: 'grid_warning_threshold', selector: { number: { min: 100, max: 20000, step: 100, mode: 'box', unit_of_measurement: 'W' } } },
-          { name: 'grid_alert_threshold', selector: { number: { min: 100, max: 20000, step: 100, mode: 'box', unit_of_measurement: 'W' } } },
+      {
+        type: 'expandable',
+        title: this._t('header_entities'),
+        schema: [
+          { name: 'grid_entity', required: true, selector: { entity: { domain: 'sensor' } } },
+          { name: 'battery_entities', selector: { entity: { domain: 'sensor', multiple: true } } },
+          { name: 'battery_power_entities', selector: { entity: { domain: 'sensor', multiple: true } } },
+          { name: 'solar_entities', selector: { entity: { domain: 'sensor', multiple: true } } },
+          { name: 'operation_state_entity', selector: { entity: {} } },
+          { name: 'zendure_mode_entity', selector: { entity: { domain: 'select' } } },
+          { name: 'tempo_today_entity', selector: { entity: {} } },
+          { name: 'tempo_tomorrow_entity', selector: { entity: {} } },
         ]
       },
-      { type: 'grid', name: '', schema: [
+      {
+        type: 'expandable',
+        title: this._t('header_settings'),
+        schema: [
+          { name: 'grid_max', selector: { number: { min: 100, step: 100, unit_of_measurement: 'W' } } },
+          { name: 'solar_max', selector: { number: { min: 100, step: 100, unit_of_measurement: 'W' } } },
+          { name: 'battery_max', selector: { number: { min: 1, step: 1, unit_of_measurement: '%' } } },
+          { name: 'battery_capacity_wh', selector: { number: { min: 100, step: 100, unit_of_measurement: 'Wh' } } },
+          { name: 'battery_power_max', selector: { number: { min: 100, step: 100, unit_of_measurement: 'W' } } },
+          { name: 'battery_power_max_entity', selector: { entity: { domain: 'sensor' } } },
+          { name: 'grid_warning_threshold', selector: { number: { min: 100, step: 100, unit_of_measurement: 'W' } } },
+          { name: 'grid_alert_threshold', selector: { number: { min: 100, step: 100, unit_of_measurement: 'W' } } },
+        ]
+      },
+      {
+        type: 'expandable',
+        title: this._t('header_display'),
+        schema: [
           { name: 'bidirectional_mode', selector: { select: { options: [{label:this._t('opt_normal'), value:'normal'}, {label:this._t('opt_bidirectional'), value:'bidirectional'}] } } },
-          { name: 'initial_battery_mode', selector: { select: { options: [{label:this._t('opt_percent'), value:'percent'}, {label:this._t('opt_power'), value:'power'}] } } },
-          { name: 'initial_solar_mode', selector: { select: { options: [{label:this._t('opt_total'), value:'total'}, {label:this._t('opt_detail'), value:'detail'}] } } },
-        ]
-      },
-      { type: 'grid', name: '', schema: [
           { name: 'show_zendure_mode', selector: { boolean: {} } },
           { name: 'show_tempo', selector: { boolean: {} } },
           { name: 'show_ring_labels', selector: { boolean: {} } },
           { name: 'enable_breathing', selector: { boolean: {} } },
-        ]
-      },
-      { type: 'grid', name: '', schema: [
           { name: 'gauge_opacity', selector: { number: { min: 0, max: 1, step: 0.05, mode: 'slider' } } },
-          { name: 'mobile_gauge_size', selector: { number: { min: 80, max: 300, step: 10, mode: 'box', unit_of_measurement: 'px' } } },
         ]
       }
     ];
@@ -884,20 +955,19 @@ class EnergyOrbitCardEditor extends HTMLElement {
         operation_state_entity: this._t('editor_operation_state_entity'),
         zendure_mode_entity: this._t('editor_zendure_mode_entity'),
         tempo_today_entity: this._t('editor_tempo_today_entity'),
+        tempo_tomorrow_entity: this._t('editor_tempo_tomorrow_entity'),
         grid_max: this._t('editor_grid_max'), solar_max: this._t('editor_solar_max'),
-        battery_max: this._t('editor_battery_max'), battery_power_max: this._t('editor_battery_power_max'),
+        battery_max: this._t('editor_battery_max'), 
+        battery_power_max: this._t('editor_battery_power_max'),
         battery_capacity_wh: this._t('editor_battery_capacity_wh'),
         grid_warning_threshold: this._t('editor_grid_warning_threshold'),
         grid_alert_threshold: this._t('editor_grid_alert_threshold'),
         bidirectional_mode: this._t('editor_bidirectional_mode'),
-        initial_battery_mode: this._t('editor_initial_battery_mode'),
-        initial_solar_mode: this._t('editor_initial_solar_mode'),
         show_zendure_mode: this._t('editor_show_zendure_mode'),
         show_tempo: this._t('editor_show_tempo'),
         show_ring_labels: this._t('editor_show_ring_labels'),
         enable_breathing: this._t('editor_enable_breathing'),
         gauge_opacity: this._t('editor_gauge_opacity'),
-        mobile_gauge_size: this._t('editor_mobile_gauge_size')
       };
       return labels[schema.name] || schema.name;
     };

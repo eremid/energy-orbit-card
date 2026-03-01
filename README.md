@@ -21,6 +21,7 @@ Designed for setups with solar panels, a home battery (perfect for Zendure) and 
 - 🔴 **EDF Tempo Color** — Displays the current day Tempo color (Blue, White, Red) as an indicator.
 - 📱 **Responsive** — Mobile-optimized layout with a large, clear orbit display.
 - 🌬️ **Breathing Animation** — Optional subtle animation when data is live.
+- 💾 **Smart Persistence** — Remembers your last display choices (Percent vs Power vs Minimal for battery, Total vs Detail for solar) per device using `localStorage`.
 
 ## 📐 Orbit Logic & Directions
 
@@ -85,7 +86,8 @@ operation_state_entity: sensor.zendure_operation_state
 grid_max: 6000                            # Max grid power (W)
 solar_max: 3000                           # Max solar power (W)
 battery_max: 100                          # Max battery level (%)
-battery_power_max: 2000                   # Max battery charge/discharge power (W)
+battery_power_max: 2000                   # Max fixed battery charge/discharge power (W)
+battery_power_max_entity: sensor.limit    # Optional - Dynamic max power entity
 battery_capacity_wh: 1920                 # Battery total capacity (Wh) – used for time estimate
 
 # --- Alert Thresholds ---
@@ -95,16 +97,15 @@ grid_alert_threshold: 5500                # Critical color threshold (W)
 # --- Zendure & Tempo ---
 zendure_mode_entity: select.zendure_smart_mode
 tempo_today_entity: sensor.rte_tempo_current_color
+tempo_tomorrow_entity: sensor.rte_tempo_next_color
 show_zendure_mode: true
 show_tempo: true
 
 # --- Display Options ---
 bidirectional_mode: bidirectional         # bidirectional | normal
-initial_battery_mode: percent             # percent | power
-initial_solar_mode: total                 # total | detail
 enable_breathing: true
 gauge_opacity: 0.85
-mobile_gauge_size: 160
+show_ring_labels: true
 ```
 
 ## ⚙️ Options Reference
@@ -118,21 +119,21 @@ mobile_gauge_size: 160
 | `operation_state_entity` | — | Entity for battery state (`charging`, `discharging`, `idle`, `off`). |
 | `zendure_mode_entity` | — | `select` entity to control the Zendure smart mode. |
 | `tempo_today_entity` | — | Sensor for EDF Tempo color today. |
+| `tempo_tomorrow_entity` | — | Sensor for EDF Tempo color tomorrow. |
 | `grid_max` | `6000` | Maximum grid power displayed on orbit (W). |
 | `solar_max` | `5000` | Maximum solar power displayed on orbit (W). |
 | `battery_max` | `100` | Maximum battery level displayed on orbit (%). |
-| `battery_power_max` | `2400` | Maximum battery power displayed on orbit (W). |
+| `battery_power_max` | `2400` | Maximum fixed battery power displayed on orbit (W). |
+| `battery_power_max_entity` | — | Dynamic entity for battery power max (priority over `battery_power_max`). |
 | `battery_capacity_wh` | `1920` | Total battery capacity in Wh (used for time-to-full/empty estimate). |
 | `grid_warning_threshold` | `6000` | Power (W) above which the grid orbit turns orange. |
 | `grid_alert_threshold` | `9000` | Power (W) above which the grid orbit turns red. |
-| `bidirectional_mode` | `bidirectional` | `bidirectional` or `normal`. |
-| `initial_battery_mode` | `percent` | Default battery display: `percent` or `power`. Click on the card to toggle. |
-| `initial_solar_mode` | `total` | Default solar display: `total` or `detail`. Click on the card to toggle. |
+| `bidirectional_mode` | `bidirectional` | Orbit style: `bidirectional` (dynamic) or `normal` (standard). |
 | `show_zendure_mode` | `true` | Show or hide the Zendure mode selector. |
 | `show_tempo` | `true` | Show or hide the EDF Tempo indicator. |
 | `enable_breathing` | `true` | Enable the subtle breathing animation. |
 | `gauge_opacity` | `0.8` | Opacity of orbit tracks (0 to 1). |
-| `mobile_gauge_size` | `160` | Orbit SVG size on mobile (px). |
+| `show_ring_labels` | `false` | Show text labels inside the orbit rings. |
 
 ## 🌍 Supported Languages
 
