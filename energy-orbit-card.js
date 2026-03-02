@@ -627,7 +627,7 @@ class EnergyOrbitCard extends HTMLElement {
     const batValEl = this.shadowRoot.getElementById('battery-value');
     const batUnitEl = this.shadowRoot.getElementById('battery-unit');
     if(batValEl) {
-        if(this._batteryMode === 'power') {
+        if(this._batteryMode === 'power' || this._batteryMode === 'minimal') {
             batValEl.textContent = Math.abs(batteryPower).toFixed(0);
             batUnitEl.textContent = 'W';
         } else {
