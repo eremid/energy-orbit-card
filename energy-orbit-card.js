@@ -261,10 +261,11 @@ class EnergyOrbitCard extends HTMLElement {
     const stateObj = this._hass.states[this.config.operation_state_entity];
     if (!stateObj) return this._t('battery');
     const state = stateObj.state;
-    if (state === '1' || state.toLowerCase() === 'charging') return this._t('charging');
-    if (state === '2' || state.toLowerCase() === 'discharging') return this._t('discharging');
-    if (state === '0' || state.toLowerCase() === 'idle') return this._t('standby');
-    if (state === '3' || state.toLowerCase() === 'off') return this._t('off');
+    const lowerState = state.toLowerCase();
+    if (state === '1' || lowerState === 'charging') return this._t('charging');
+    if (state === '2' || lowerState === 'discharging') return this._t('discharging');
+    if (state === '0' || lowerState === 'idle') return this._t('standby');
+    if (state === '3' || lowerState === 'off') return this._t('off');
     return this._t('battery');
   }
 
