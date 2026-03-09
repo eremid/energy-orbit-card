@@ -143,12 +143,43 @@ class EnergyOrbitCard extends HTMLElement {
     
     // Clean up potential nested headers or previous alignment hacks
     const cleanConfig = { ...config };
+
+    // Legacy singular entity migration
+    if (cleanConfig.battery_entity && (!cleanConfig.battery_entities || cleanConfig.battery_entities.length === 0)) {
+        cleanConfig.battery_entities = [cleanConfig.battery_entity];
+    }
+    if (cleanConfig.battery_power_entity && (!cleanConfig.battery_power_entities || cleanConfig.battery_power_entities.length === 0)) {
+        cleanConfig.battery_power_entities = [cleanConfig.battery_power_entity];
+    }
+    if (cleanConfig.solar_entity && (!cleanConfig.solar_entities || cleanConfig.solar_entities.length === 0)) {
+        cleanConfig.solar_entities = [cleanConfig.solar_entity];
+    }
+
+    // Colors mapping (using cleanConfig before deletion)
+    const colors = {
+      grid_import: this._sanitizeColor(cleanConfig.grid_import_color || cleanConfig.colors?.grid_import, '#3498db'),
+      grid_export: this._sanitizeColor(cleanConfig.grid_export_color || cleanConfig.colors?.grid_export, '#2ecc71'),
+      solar: this._sanitizeColor(cleanConfig.solar_color || cleanConfig.colors?.solar, '#FFD700'),
+      battery: this._sanitizeColor(cleanConfig.battery_color || cleanConfig.colors?.battery, '#FF6B35'),
+      battery_charge: this._sanitizeColor(cleanConfig.battery_charge_color || cleanConfig.colors?.battery_charge, '#e74c3c'),
+      battery_discharge: this._sanitizeColor(cleanConfig.battery_discharge_color || cleanConfig.colors?.battery_discharge, '#2ecc71'),
+    };
+
     delete cleanConfig.header_entities;
     delete cleanConfig.header_settings;
     delete cleanConfig.header_display;
     delete cleanConfig.battery_power_max_title;
     delete cleanConfig.battery_power_max_entity_title;
     delete cleanConfig.mobile_gauge_size;
+    delete cleanConfig.battery_entity;
+    delete cleanConfig.battery_power_entity;
+    delete cleanConfig.solar_entity;
+    delete cleanConfig.grid_import_color;
+    delete cleanConfig.grid_export_color;
+    delete cleanConfig.solar_color;
+    delete cleanConfig.battery_color;
+    delete cleanConfig.battery_charge_color;
+    delete cleanConfig.battery_discharge_color;
     
     if (Array.isArray(cleanConfig.battery_entities)) cleanConfig.battery_entities = cleanConfig.battery_entities.filter(e => e !== null);
     if (Array.isArray(cleanConfig.battery_power_entities)) cleanConfig.battery_power_entities = cleanConfig.battery_power_entities.filter(e => e !== null);
@@ -174,15 +205,7 @@ class EnergyOrbitCard extends HTMLElement {
       show_ring_labels: cleanConfig.show_ring_labels === true,
       gauge_opacity: this._sanitizeNumber(cleanConfig.gauge_opacity !== undefined ? cleanConfig.gauge_opacity : 0.8, 0.8),
       enable_breathing: cleanConfig.enable_breathing !== false,
-      mobile_gauge_size: 160,
-      colors: {
-        grid_import: this._sanitizeColor(cleanConfig.grid_import_color || cleanConfig.colors?.grid_import, '#3498db'),
-        grid_export: this._sanitizeColor(cleanConfig.grid_export_color || cleanConfig.colors?.grid_export, '#2ecc71'),
-        solar: this._sanitizeColor(cleanConfig.solar_color || cleanConfig.colors?.solar, '#FFD700'),
-        battery: this._sanitizeColor(cleanConfig.battery_color || cleanConfig.colors?.battery, '#FF6B35'),
-        battery_charge: this._sanitizeColor(cleanConfig.battery_charge_color || cleanConfig.colors?.battery_charge, '#e74c3c'),
-        battery_discharge: this._sanitizeColor(cleanConfig.battery_discharge_color || cleanConfig.colors?.battery_discharge, '#2ecc71'),
-      }
+      colors
     };
     this._batteryMode = localStorage.getItem(this._getStorageKey('battery_mode', this.config.grid_entity)) || 'percent';
     this._solarMode = localStorage.getItem(this._getStorageKey('solar_mode', this.config.grid_entity)) || 'total';
@@ -272,21 +295,15 @@ class EnergyOrbitCard extends HTMLElement {
     if (this.config.battery_entities.length > 0) {
       return this.config.battery_entities.reduce((acc, e) => acc + this._getEntityValue(e), 0) / this.config.battery_entities.length;
     }
-    return this._getEntityValue(this.config.battery_entity);
+    return 0;
   }
 
   _getBatteryPower() {
-    if (this.config.battery_power_entities.length > 0) {
-      return this.config.battery_power_entities.reduce((acc, e) => acc + this._getEntityValue(e), 0);
-    }
-    return this._getEntityValue(this.config.battery_power_entity);
+    return this.config.battery_power_entities.reduce((acc, e) => acc + this._getEntityValue(e), 0);
   }
 
   _getSolarProduction() {
-    let total = 0;
-    if (this.config.solar_entities.length > 0) total += this.config.solar_entities.reduce((acc, e) => acc + this._getEntityValue(e), 0);
-    if (this.config.solar_entity) total += this._getEntityValue(this.config.solar_entity);
-    return total;
+    return this.config.solar_entities.reduce((acc, e) => acc + this._getEntityValue(e), 0);
   }
 
   _getMdiPath(icon) {
@@ -663,15 +680,10 @@ class EnergyOrbitCard extends HTMLElement {
                 batAutoEl.textContent = "";
             } else {
                 const parts = [];
-                if (this.config.battery_power_entities && this.config.battery_power_entities.length > 0) {
-                    this.config.battery_power_entities.forEach((e) => {
-                        const v = this._getEntityValue(e);
-                        parts.push(`${Math.round(Math.abs(v))}W`);
-                    });
-                } else if (this.config.battery_power_entity) {
-                    const v = this._getEntityValue(this.config.battery_power_entity);
+                this.config.battery_power_entities.forEach((e) => {
+                    const v = this._getEntityValue(e);
                     parts.push(`${Math.round(Math.abs(v))}W`);
-                }
+                });
                 batAutoEl.textContent = parts.join(' + ');
             }
         } else {
@@ -699,8 +711,7 @@ class EnergyOrbitCard extends HTMLElement {
     if(solDetCont) {
         if (this._solarMode === 'detail') {
             solDetCont.style.display = 'block'; 
-            const ents = [...this.config.solar_entities];
-            if(this.config.solar_entity) ents.push(this.config.solar_entity);
+            const ents = this.config.solar_entities;
 
             solDetCont.innerHTML = '';
             ents.forEach(e => {
