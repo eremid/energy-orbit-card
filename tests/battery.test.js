@@ -43,17 +43,16 @@ const sandbox = {
 };
 
 vm.createContext(sandbox);
-// Use a wrapper to ensure EnergyOrbitCard is returned or accessible
 const script = new vm.Script(code + '\nEnergyOrbitCard;');
 const EnergyOrbitCard = script.runInContext(sandbox);
 
 test('_getBatteryLevel aggregation', async (t) => {
   await t.test('should return value from single battery_entity', () => {
     const card = new EnergyOrbitCard();
-    card.config = {
-      battery_entity: 'sensor.battery',
-      battery_entities: []
-    };
+    card.setConfig({
+      grid_entity: 'sensor.grid',
+      battery_entity: 'sensor.battery'
+    });
     card._hass = {
       states: {
         'sensor.battery': { state: '45' }
@@ -64,9 +63,10 @@ test('_getBatteryLevel aggregation', async (t) => {
 
   await t.test('should return average of multiple battery_entities', () => {
     const card = new EnergyOrbitCard();
-    card.config = {
+    card.setConfig({
+      grid_entity: 'sensor.grid',
       battery_entities: ['sensor.battery1', 'sensor.battery2']
-    };
+    });
     card._hass = {
       states: {
         'sensor.battery1': { state: '40' },
@@ -78,9 +78,10 @@ test('_getBatteryLevel aggregation', async (t) => {
 
   await t.test('should return 0 if no entities and no hass', () => {
     const card = new EnergyOrbitCard();
-    card.config = {
+    card.setConfig({
+      grid_entity: 'sensor.grid',
       battery_entities: []
-    };
+    });
     assert.strictEqual(card._getBatteryLevel(), 0);
   });
 });
@@ -88,10 +89,10 @@ test('_getBatteryLevel aggregation', async (t) => {
 test('_getBatteryPower aggregation', async (t) => {
   await t.test('should return value from single battery_power_entity', () => {
     const card = new EnergyOrbitCard();
-    card.config = {
-      battery_power_entity: 'sensor.battery_power',
-      battery_power_entities: []
-    };
+    card.setConfig({
+      grid_entity: 'sensor.grid',
+      battery_power_entity: 'sensor.battery_power'
+    });
     card._hass = {
       states: {
         'sensor.battery_power': { state: '100' }
@@ -102,9 +103,10 @@ test('_getBatteryPower aggregation', async (t) => {
 
   await t.test('should return sum of multiple battery_power_entities', () => {
     const card = new EnergyOrbitCard();
-    card.config = {
+    card.setConfig({
+      grid_entity: 'sensor.grid',
       battery_power_entities: ['sensor.battery_power1', 'sensor.battery_power2']
-    };
+    });
     card._hass = {
       states: {
         'sensor.battery_power1': { state: '100' },
@@ -116,9 +118,10 @@ test('_getBatteryPower aggregation', async (t) => {
 
   await t.test('should handle negative values (charging)', () => {
     const card = new EnergyOrbitCard();
-    card.config = {
+    card.setConfig({
+      grid_entity: 'sensor.grid',
       battery_power_entities: ['sensor.battery_power1', 'sensor.battery_power2']
-    };
+    });
     card._hass = {
       states: {
         'sensor.battery_power1': { state: '-100' },
@@ -126,5 +129,36 @@ test('_getBatteryPower aggregation', async (t) => {
       }
     };
     assert.strictEqual(card._getBatteryPower(), -150);
+  });
+});
+
+test('_getSolarProduction aggregation', async (t) => {
+  await t.test('should return value from single solar_entity', () => {
+    const card = new EnergyOrbitCard();
+    card.setConfig({
+      grid_entity: 'sensor.grid',
+      solar_entity: 'sensor.solar'
+    });
+    card._hass = {
+      states: {
+        'sensor.solar': { state: '1000' }
+      }
+    };
+    assert.strictEqual(card._getSolarProduction(), 1000);
+  });
+
+  await t.test('should return sum of multiple solar_entities', () => {
+    const card = new EnergyOrbitCard();
+    card.setConfig({
+      grid_entity: 'sensor.grid',
+      solar_entities: ['sensor.solar1', 'sensor.solar2']
+    });
+    card._hass = {
+      states: {
+        'sensor.solar1': { state: '1500' },
+        'sensor.solar2': { state: '2500' }
+      }
+    };
+    assert.strictEqual(card._getSolarProduction(), 4000);
   });
 });
