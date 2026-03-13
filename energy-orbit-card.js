@@ -114,6 +114,7 @@ const eocIcons = {
 const eocSafeColorPattern = /^[a-zA-Z0-9#(),. %_\-]+$/;
 const eocShorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
 const eocFullHexRegex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
+const eocSolarProductionRegex = /(Solar|Production)/gi;
 class EnergyOrbitCard extends HTMLElement {
   _t(key) {
     const lang = (this._hass && this._hass.language) ? this._hass.language.substring(0, 2) : 'en';
@@ -720,7 +721,7 @@ class EnergyOrbitCard extends HTMLElement {
 
             solDetCont.innerHTML = '';
             ents.forEach(e => {
-                let n = this._getEntityFriendlyName(e).replace(/(Solar|Production)/gi, '').trim();
+                let n = this._getEntityFriendlyName(e).replace(eocSolarProductionRegex, '').trim();
                 if(n.length > 15) n = n.substring(0,15)+'.';
 
                 const row = document.createElement('div');
