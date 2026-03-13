@@ -553,7 +553,13 @@ class EnergyOrbitCard extends HTMLElement {
               {v: 'smart_discharging', l: this._t('z_discharge')}, {v: 'smart_charging', l: this._t('z_charge')},
               {v: 'off', l: this._t('z_off')}
           ];
-          zendureSelect.innerHTML = options.map(o => `<option value="${o.v}">${o.l}</option>`).join('');
+          zendureSelect.innerHTML = '';
+          options.forEach(o => {
+              const opt = document.createElement('option');
+              opt.value = o.v;
+              opt.textContent = o.l;
+              zendureSelect.appendChild(opt);
+          });
           zendureSelect.addEventListener('change', (e) => this._setZendureMode(e));
       }
   }
