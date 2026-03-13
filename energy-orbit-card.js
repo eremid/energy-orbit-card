@@ -115,13 +115,15 @@ const eocSafeColorPattern = /^[a-zA-Z0-9#(),. %_\-]+$/;
 const eocShorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
 const eocFullHexRegex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
 const eocSolarProductionRegex = /(Solar|Production)/gi;
-class EnergyOrbitCard extends HTMLElement {
+class EnergyOrbitCardBase extends HTMLElement {
   _t(key) {
     const lang = (this._hass && this._hass.language) ? this._hass.language.substring(0, 2) : 'en';
     const t = eocTranslations[lang] || eocTranslations['en'];
     return t[key] || eocTranslations['en'][key] || key;
   }
+}
 
+class EnergyOrbitCard extends EnergyOrbitCardBase {
   static getConfigElement() {
     return document.createElement("energy-orbit-card-editor");
   }
@@ -884,14 +886,8 @@ class EnergyOrbitCard extends HTMLElement {
 }
 
 
-class EnergyOrbitCardEditor extends HTMLElement {
+class EnergyOrbitCardEditor extends EnergyOrbitCardBase {
   constructor() { super(); }
-
-  _t(key) {
-    const lang = (this._hass && this._hass.language) ? this._hass.language.substring(0, 2) : 'en';
-    const t = eocTranslations[lang] || eocTranslations['en'];
-    return t[key] || eocTranslations['en'][key] || key;
-  }
 
   setConfig(config) {
     this._config = config;
