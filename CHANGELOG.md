@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.0.1](https://github.com/eremid/energy-orbit-card/compare/v2.0.0...v2.0.1) (2026-03-13)
+
+
+### Bug Fixes
+
+* ensure visual symmetry and prevent bottom clipping with optional bars ([1bb3c2a](https://github.com/eremid/energy-orbit-card/commit/1bb3c2a61bfa70c6fcd866159782b6a76483004e))
+* prevent potential XSS in zendure mode selector ([6e8a722](https://github.com/eremid/energy-orbit-card/commit/6e8a72261e7c1fe0963293135567874e1879c79c))
+
+
+### Performance Improvements
+
+* hoist solar production regex outside loop ([4209861](https://github.com/eremid/energy-orbit-card/commit/4209861ad389c463ebf5549272fc24e7ff15be00))
+* optimize hex color conversion and sanitize color regex ([d19a65f](https://github.com/eremid/energy-orbit-card/commit/d19a65f507c7294ebba09499a0d769aeed5bb2bb))
+
 ## [2.0.0](https://github.com/eremid/energy-orbit-card/compare/v1.0.0...v2.0.0) (2026-03-02)
 
 
