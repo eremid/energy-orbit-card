@@ -21,6 +21,8 @@ const eocTranslations = {
     editor_show_zendure_mode: "Show Zendure Mode", editor_show_tempo: "Show Tempo",
     editor_enable_breathing: "Breathing Animation", editor_gauge_opacity: "Orbit Opacity",
     editor_show_ring_labels: "Show Ring Labels",
+    editor_padding_top: "Top Padding (px)",
+    editor_padding_bottom: "Bottom Padding (px)",
     opt_bidirectional: "Dynamic (Two directions)", opt_normal: "Standard (Clockwise)",
     opt_percent: "Percent", opt_power: "Power", opt_total: "Total", opt_detail: "Detail",
     header_entities: "Entities", header_settings: "Max Settings & Thresholds", header_display: "Display Options"
@@ -46,6 +48,8 @@ const eocTranslations = {
     editor_show_zendure_mode: "Afficher mode Zendure", editor_show_tempo: "Afficher Tempo",
     editor_enable_breathing: "Animation respiration", editor_gauge_opacity: "Opacité orbites",
     editor_show_ring_labels: "Afficher labels anneaux",
+    editor_padding_top: "Padding haut (px)",
+    editor_padding_bottom: "Padding bas (px)",
     opt_bidirectional: "Dynamique (Deux sens)", opt_normal: "Standard (Sens horaire)",
     opt_percent: "Pourcentage", opt_power: "Puissance", opt_total: "Total", opt_detail: "Détail",
     header_entities: "Entités", header_settings: "Réglages Max & Seuils", header_display: "Options d'affichage"
@@ -71,6 +75,8 @@ const eocTranslations = {
     editor_show_zendure_mode: "Mostrar modo Zendure", editor_show_tempo: "Mostrar Tempo",
     editor_enable_breathing: "Animación de respiración", editor_gauge_opacity: "Opacidad de órbitas",
     editor_show_ring_labels: "Mostrar etiquetas de anillos",
+    editor_padding_top: "Margen superior (px)",
+    editor_padding_bottom: "Margen inferior (px)",
     opt_bidirectional: "Dinámico (Dos sentidos)", opt_normal: "Estándar (Sentido horario)",
     opt_percent: "Porcentaje", opt_power: "Potencia", opt_total: "Total", opt_detail: "Detalle",
     header_entities: "Entidades", header_settings: "Ajustes Máximos", header_display: "Opciones de Visualización"
@@ -96,6 +102,8 @@ const eocTranslations = {
     editor_show_zendure_mode: "Zendure-Modus anzeigen", editor_show_tempo: "Tempo anzeigen",
     editor_enable_breathing: "Atmungsanimation", editor_gauge_opacity: "Orbit-Deckkraft",
     editor_show_ring_labels: "Ringbeschriftungen anzeigen",
+    editor_padding_top: "Oberer Abstand (px)",
+    editor_padding_bottom: "Unterer Abstand (px)",
     opt_bidirectional: "Dynamisch (Zwei Richtungen)", opt_normal: "Standard (Im Uhrzeigersinn)",
     opt_percent: "Prozent", opt_power: "Leistung", opt_total: "Gesamt", opt_detail: "Detail",
     header_entities: "Entitäten", header_settings: "Max-Einstellungen", header_display: "Anzeigeoptionen"
@@ -211,6 +219,8 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
       show_tempo: cleanConfig.show_tempo !== false,
       show_ring_labels: cleanConfig.show_ring_labels === true,
       gauge_opacity: this._sanitizeNumber(cleanConfig.gauge_opacity !== undefined ? cleanConfig.gauge_opacity : 0.8, 0.8),
+      padding_top: this._sanitizeNumber(cleanConfig.padding_top !== undefined ? cleanConfig.padding_top : 16, 16),
+      padding_bottom: this._sanitizeNumber(cleanConfig.padding_bottom !== undefined ? cleanConfig.padding_bottom : 16, 16),
       enable_breathing: cleanConfig.enable_breathing !== false,
       colors
     };
@@ -329,11 +339,31 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
         :host { display: block; }
         ha-card {
           background: var(--ha-card-background, var(--card-background-color, #1c2b3a));
-          border-radius: 16px; padding: 16px; position: relative; overflow: hidden; z-index: 1;
+          border-radius: 16px; 
+          display: flex;
+          flex-direction: column;
+          padding: 0 !important;
+          position: relative; overflow: hidden; z-index: 1;
           box-shadow: var(--ha-card-box-shadow, 0 4px 16px rgba(0,0,0,0.2));
+          height: auto;
         }
 
-        .main-layout { display: grid; grid-template-columns: 1fr; position: relative; min-height: 260px; align-items: center; }
+        .card-container { 
+          display: flex;
+          flex-direction: column;
+          padding: var(--card-padding-top, 16px) 16px var(--card-padding-bottom, 16px) 16px;
+          width: 100%;
+          flex: 1 0 auto;
+        }
+
+        .content-wrapper {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          margin: 28px 0; /* Safety margin for gauge and rounded corners, matches visual top space */
+        }
+
+        .main-layout { display: grid; grid-template-columns: 1fr; position: relative; align-items: center; }
         .stats-col { 
             display: flex; flex-direction: column; gap: 10px; z-index: 2; position: relative; padding-top: 0; 
             -webkit-mask-image: radial-gradient(circle at var(--gauge-hole-x, 50%) 50%, transparent 100px, black 101px);
@@ -342,8 +372,9 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
         .gauge-col { display: flex; justify-content: center; align-items: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 10; pointer-events: none; width: 100%; height: 100%; }
 
         @media (max-width: 500px) {
-          ha-card { padding: 8px 12px 12px 12px !important; }
-          .main-layout { min-height: 230px !important; }
+          .card-container { padding: 8px 12px 12px 12px !important; }
+          .content-wrapper { margin: 16px 0; gap: 8px; }
+          .main-layout { min-height: 220px !important; }
           .stats-col { width: 50% !important; --gauge-hole-x: 150%; }
           .gauge-col { left: 75% !important; }
           .gauge-wrapper { width: 220px !important; height: 220px !important; }
@@ -354,8 +385,8 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
           .stat-subtext { font-size: 0.6em !important; text-align: left !important; }
           .solar-details { font-size: 0.6em !important; margin-top: 2px !important; min-width: 0 !important; width: 100%; }
           
-          .zendure-mode { margin-top: 4px !important; }
-          .tempo-container { margin-top: 4px !important; padding-top: 4px !important; }
+          .zendure-mode { margin-top: 0 !important; }
+          .tempo-container { margin-top: 0 !important; padding-top: 4px !important; }
         }
 
         .stat-item {
@@ -424,120 +455,122 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
         .grid-value.alert { color: #e74c3c; animation: pulse 1s infinite; }
         @keyframes pulse { 50% { opacity: 0.5; } }
 
-        .zendure-mode { margin-top: 8px; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 5px 10px; border-radius: 8px; }
+        .zendure-mode { margin-top: 0; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 8px; }
         .zendure-select { background: transparent; border: none; color: inherit; width: 100%; outline: none; font-size: 0.85em; font-weight:600; cursor: pointer; }
         .zendure-select option { background: #333; color: #fff; }
 
-        .tempo-container { display: flex; gap: 8px; margin-top: 12px; cursor: pointer; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
-        .tempo-day { flex: 1; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 8px; }
+        .tempo-container { display: flex; gap: 8px; margin-top: 0; cursor: pointer; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px; }
+        .tempo-day { flex: 1; display: flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 8px; }
         .tempo-indicator { width: 14px; height: 14px; border-radius: 50%; box-shadow: 0 0 10px currentColor; border: 2px solid rgba(255,255,255,0.2); }
       </style>
 
-      <ha-card style="--gauge-opacity: ${this.config.gauge_opacity};">
+      <ha-card style="--gauge-opacity: ${this.config.gauge_opacity}; --card-padding-top: ${this.config.padding_top}px; --card-padding-bottom: ${this.config.padding_bottom}px;">
         <div class="card-container">
-          <div class="main-layout">
-            <div class="stats-col" id="stats-grid">
-                <div class="stat-item" id="grid-stat" style="--stat-color: ${c.grid_import}; --stat-bg: ${c.grid_import}26;">
-                  <div class="stat-icon"><svg viewBox="0 0 24 24" fill="${c.grid_import}" id="grid-icon"><path d="${gridIconPath}"/></svg></div>
-                  <div class="stat-content">
-                    <div class="stat-main-line"><span class="stat-value" id="grid-stat-value">--</span><span class="stat-unit">W</span></div>
-                    <div class="stat-right-info">
-                        <div class="stat-label">${this._t('network')}</div>
+          <div class="content-wrapper">
+            <div class="main-layout">
+              <div class="stats-col" id="stats-grid">
+                  <div class="stat-item" id="grid-stat" style="--stat-color: ${c.grid_import}; --stat-bg: ${c.grid_import}26;">
+                    <div class="stat-icon"><svg viewBox="0 0 24 24" fill="${c.grid_import}" id="grid-icon"><path d="${gridIconPath}"/></svg></div>
+                    <div class="stat-content">
+                      <div class="stat-main-line"><span class="stat-value" id="grid-stat-value">--</span><span class="stat-unit">W</span></div>
+                      <div class="stat-right-info">
+                          <div class="stat-label">${this._t('network')}</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="stat-item clickable" id="battery-stat-item" style="--stat-color: ${c.battery}; --stat-bg: ${c.battery}26;">
-                  <div class="stat-icon" id="battery-icon-wrapper" style="--halo-rgb: 255,107,53;"><svg viewBox="0 0 24 24" fill="${c.battery}" id="battery-icon-svg"><path d="${batteryIconPath}"/></svg></div>
-                  <div class="stat-content">
-                    <div class="stat-main-line"><span class="stat-value" id="battery-value">--</span><span class="stat-unit" id="battery-unit">%</span></div>
-                    <div class="stat-right-info">
-                        <div class="stat-label" id="battery-label">${this._t('battery')}</div>
-                        <div class="stat-subtext" id="battery-autonomy"></div>
+                  <div class="stat-item clickable" id="battery-stat-item" style="--stat-color: ${c.battery}; --stat-bg: ${c.battery}26;">
+                    <div class="stat-icon" id="battery-icon-wrapper" style="--halo-rgb: 255,107,53;"><svg viewBox="0 0 24 24" fill="${c.battery}" id="battery-icon-svg"><path d="${batteryIconPath}"/></svg></div>
+                    <div class="stat-content">
+                      <div class="stat-main-line"><span class="stat-value" id="battery-value">--</span><span class="stat-unit" id="battery-unit">%</span></div>
+                      <div class="stat-right-info">
+                          <div class="stat-label" id="battery-label">${this._t('battery')}</div>
+                          <div class="stat-subtext" id="battery-autonomy"></div>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="stat-item clickable" id="solar-stat-item" style="--stat-color: ${c.solar}; --stat-bg: ${c.solar}26;">
-                  <div class="stat-icon breathing" id="solar-icon-wrapper" style="--halo-rgb: 255,215,0;"><svg viewBox="0 0 24 24" fill="${c.solar}"><path d="${this._getMdiPath('solar')}"/></svg></div>
-                  <div class="stat-content">
-                    <div class="stat-main-line"><span class="stat-value" id="solar-value">--</span><span class="stat-unit">W</span></div>
-                    <div class="stat-right-info">
-                        <div class="stat-label">${this._t('production')}</div>
-                        <div id="solar-details-container" class="solar-details" style="display: none;"></div>
+                  <div class="stat-item clickable" id="solar-stat-item" style="--stat-color: ${c.solar}; --stat-bg: ${c.solar}26;">
+                    <div class="stat-icon breathing" id="solar-icon-wrapper" style="--halo-rgb: 255,215,0;"><svg viewBox="0 0 24 24" fill="${c.solar}"><path d="${this._getMdiPath('solar')}"/></svg></div>
+                    <div class="stat-content">
+                      <div class="stat-main-line"><span class="stat-value" id="solar-value">--</span><span class="stat-unit">W</span></div>
+                      <div class="stat-right-info">
+                          <div class="stat-label">${this._t('production')}</div>
+                          <div id="solar-details-container" class="solar-details" style="display: none;"></div>
+                      </div>
                     </div>
                   </div>
-                </div>
-            </div>
+              </div>
 
-            <!-- TIGHTER GAUGE SVG WITH CLIP FIX -->
-            <div class="gauge-col">
-               <div class="gauge-wrapper">
-                  <svg viewBox="-10 -10 220 220">
-                     <defs>
-                       <linearGradient id="gridGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.grid_import}"/><stop offset="100%" style="stop-color:${c.grid_import}aa"/></linearGradient>
-                       <linearGradient id="gridInjectionGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.grid_export}"/><stop offset="100%" style="stop-color:${c.grid_export}aa"/></linearGradient>
-                       <linearGradient id="batteryGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.battery}"/><stop offset="100%" style="stop-color:${c.battery}aa"/></linearGradient>
-                       <linearGradient id="solarGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.solar}"/><stop offset="100%" style="stop-color:${c.solar}aa"/></linearGradient>
-                       <linearGradient id="batteryChargingGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.battery_charge}"/><stop offset="100%" style="stop-color:${c.battery_charge}aa"/></linearGradient>
-                       <linearGradient id="batteryDischargingGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.battery_discharge}"/><stop offset="100%" style="stop-color:${c.battery_discharge}aa"/></linearGradient>
-                       <filter id="glow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+              <!-- TIGHTER GAUGE SVG WITH CLIP FIX -->
+              <div class="gauge-col">
+                 <div class="gauge-wrapper">
+                    <svg viewBox="-10 -10 220 220">
+                       <defs>
+                         <linearGradient id="gridGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.grid_import}"/><stop offset="100%" style="stop-color:${c.grid_import}aa"/></linearGradient>
+                         <linearGradient id="gridInjectionGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.grid_export}"/><stop offset="100%" style="stop-color:${c.grid_export}aa"/></linearGradient>
+                         <linearGradient id="batteryGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.battery}"/><stop offset="100%" style="stop-color:${c.battery}aa"/></linearGradient>
+                         <linearGradient id="solarGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.solar}"/><stop offset="100%" style="stop-color:${c.solar}aa"/></linearGradient>
+                         <linearGradient id="batteryChargingGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.battery_charge}"/><stop offset="100%" style="stop-color:${c.battery_charge}aa"/></linearGradient>
+                         <linearGradient id="batteryDischargingGradient" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:${c.battery_discharge}"/><stop offset="100%" style="stop-color:${c.battery_discharge}aa"/></linearGradient>
+                         <filter id="glow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                         ${this.config.show_ring_labels ? `
+                           <path id="path-battery-level" d="M 100, 188 A 88,88 0 1,1 100, 12 A 88,88 0 1,1 100, 188" />
+                           <path id="path-grid" d="M 100, 172 A 72,72 0 1,1 100, 28 A 72,72 0 1,1 100, 172" />
+                           <path id="path-battery-power" d="M 100, 163 A 63,63 0 1,1 100, 37 A 63,63 0 1,1 100, 163" />
+                           <path id="path-solar" d="M 100, 154 A 54,54 0 1,1 100, 46 A 54,54 0 1,1 100, 154" />
+                         ` : ''}
+                       </defs>
+
                        ${this.config.show_ring_labels ? `
-                         <path id="path-battery-level" d="M 100, 188 A 88,88 0 1,1 100, 12 A 88,88 0 1,1 100, 188" />
-                         <path id="path-grid" d="M 100, 172 A 72,72 0 1,1 100, 28 A 72,72 0 1,1 100, 172" />
-                         <path id="path-battery-power" d="M 100, 163 A 63,63 0 1,1 100, 37 A 63,63 0 1,1 100, 163" />
-                         <path id="path-solar" d="M 100, 154 A 54,54 0 1,1 100, 46 A 54,54 0 1,1 100, 154" />
+                         <style>
+                           .ring-label { font-size: 6px; font-weight: 900; fill: #fff; text-transform: uppercase; pointer-events: none; letter-spacing: 0.5px; opacity: 0.9; dominant-baseline: middle; }
+                         </style>
                        ` : ''}
-                     </defs>
 
-                     ${this.config.show_ring_labels ? `
-                       <style>
-                         .ring-label { font-size: 6px; font-weight: 900; fill: #fff; text-transform: uppercase; pointer-events: none; letter-spacing: 0.5px; opacity: 0.9; dominant-baseline: middle; }
-                       </style>
-                     ` : ''}
+                       <!-- Battery Level (Outer) - r=88 -->
+                       <circle class="gauge-track" cx="100" cy="100" r="88" stroke-width="10" transform="rotate(-90 100 100)" />
+                       <circle class="gauge-progress" cx="100" cy="100" r="88" id="battery-level-gauge" transform="rotate(-90 100 100)" stroke="url(#batteryGradient)" stroke-width="10" filter="url(#glow)"/>
 
-                     <!-- Battery Level (Outer) - r=88 -->
-                     <circle class="gauge-track" cx="100" cy="100" r="88" stroke-width="10" transform="rotate(-90 100 100)" />
-                     <circle class="gauge-progress" cx="100" cy="100" r="88" id="battery-level-gauge" transform="rotate(-90 100 100)" stroke="url(#batteryGradient)" stroke-width="10" filter="url(#glow)"/>
+                       <!-- Grid - r=72 -->
+                       <circle class="gauge-track" cx="100" cy="100" r="72" stroke-width="8" transform="rotate(-90 100 100)" />
+                       <circle class="gauge-progress" cx="100" cy="100" r="72" id="grid-gauge" transform="rotate(-90 100 100)" stroke="url(#gridGradient)" stroke-width="8" filter="url(#glow)"/>
 
-                     <!-- Grid - r=72 -->
-                     <circle class="gauge-track" cx="100" cy="100" r="72" stroke-width="8" transform="rotate(-90 100 100)" />
-                     <circle class="gauge-progress" cx="100" cy="100" r="72" id="grid-gauge" transform="rotate(-90 100 100)" stroke="url(#gridGradient)" stroke-width="8" filter="url(#glow)"/>
+                       <!-- Battery Power - r=63 -->
+                       <circle class="gauge-track" cx="100" cy="100" r="63" stroke-width="8" transform="rotate(-90 100 100)" />
+                       <circle class="gauge-progress" cx="100" cy="100" r="63" id="battery-power-gauge" transform="rotate(-90 100 100)" stroke="url(#batteryDischargingGradient)" stroke-width="8" filter="url(#glow)"/>
 
-                     <!-- Battery Power - r=63 -->
-                     <circle class="gauge-track" cx="100" cy="100" r="63" stroke-width="8" transform="rotate(-90 100 100)" />
-                     <circle class="gauge-progress" cx="100" cy="100" r="63" id="battery-power-gauge" transform="rotate(-90 100 100)" stroke="url(#batteryDischargingGradient)" stroke-width="8" filter="url(#glow)"/>
+                       <!-- Solar (Inner) - r=54 -->
+                       <circle class="gauge-track" cx="100" cy="100" r="54" stroke-width="8" transform="rotate(-90 100 100)" />
+                       <circle class="gauge-progress" cx="100" cy="100" r="54" id="solar-gauge" transform="rotate(-90 100 100)" stroke="url(#solarGradient)" stroke-width="8" filter="url(#glow)"/>
 
-                     <!-- Solar (Inner) - r=54 -->
-                     <circle class="gauge-track" cx="100" cy="100" r="54" stroke-width="8" transform="rotate(-90 100 100)" />
-                     <circle class="gauge-progress" cx="100" cy="100" r="54" id="solar-gauge" transform="rotate(-90 100 100)" stroke="url(#solarGradient)" stroke-width="8" filter="url(#glow)"/>
-
-                     ${this.config.show_ring_labels ? `
-                       <text id="label-battery-level" class="ring-label" dy="1.8"><textPath href="#path-battery-level" startOffset="48%">${this._t('battery')}</textPath></text>
-                       <text id="label-grid" class="ring-label" dy="1.8"><textPath href="#path-grid" startOffset="48%">${this._t('network')}</textPath></text>
-                       <text id="label-battery-power" class="ring-label" dy="1.8"><textPath href="#path-battery-power" startOffset="48%">${this._t('battery')}</textPath></text>
-                       <text id="label-solar" class="ring-label" dy="1.8"><textPath href="#path-solar" startOffset="48%">${this._t('production')}</textPath></text>
-                     ` : ''}
-                  </svg>
-                  <div class="center-content">
-                     <div class="grid-value" id="center-value">--</div><div class="grid-unit" id="center-unit">W</div>
-                  </div>
-               </div>
+                       ${this.config.show_ring_labels ? `
+                         <text id="label-battery-level" class="ring-label" dy="1.8"><textPath href="#path-battery-level" startOffset="48%">${this._t('battery')}</textPath></text>
+                         <text id="label-grid" class="ring-label" dy="1.8"><textPath href="#path-grid" startOffset="48%">${this._t('network')}</textPath></text>
+                         <text id="label-battery-power" class="ring-label" dy="1.8"><textPath href="#path-battery-power" startOffset="48%">${this._t('battery')}</textPath></text>
+                         <text id="label-solar" class="ring-label" dy="1.8"><textPath href="#path-solar" startOffset="48%">${this._t('production')}</textPath></text>
+                       ` : ''}
+                    </svg>
+                    <div class="center-content">
+                       <div class="grid-value" id="center-value">--</div><div class="grid-unit" id="center-unit">W</div>
+                    </div>
+                 </div>
+              </div>
             </div>
+
+            ${this.config.show_zendure_mode && this.config.zendure_mode_entity ? `
+              <div class="zendure-mode">
+                <svg viewBox="0 0 24 24" style="width:20px;height:20px;flex-shrink:0;"><path d="${this._getMdiPath('zendure')}" fill="currentColor"/></svg>
+                <select class="zendure-select" id="zendure-selector"><option value="auto">${this._t('loading')}</option></select>
+              </div>
+            ` : ''}
+
+            ${this.config.show_tempo ? `
+              <div class="tempo-container" id="tempo-container">
+                ${this.config.tempo_today_entity ? `<div class="tempo-day" style="justify-content:flex-end"><span style="font-size:0.7em;opacity:0.6;text-transform:uppercase">${this._t('today')}</span><div class="tempo-indicator" id="tempo-today-indicator"></div></div>` : ''}
+                ${this.config.tempo_tomorrow_entity ? `<div class="tempo-day"><div class="tempo-indicator" id="tempo-tomorrow-indicator"></div><span style="font-size:0.7em;opacity:0.6;text-transform:uppercase">${this._t('tomorrow')}</span></div>` : ''}
+              </div>
+            ` : ''}
           </div>
         </div>
-
-        ${this.config.show_zendure_mode && this.config.zendure_mode_entity ? `
-          <div class="zendure-mode">
-            <svg viewBox="0 0 24 24" style="width:20px;height:20px;flex-shrink:0;"><path d="${this._getMdiPath('zendure')}" fill="currentColor"/></svg>
-            <select class="zendure-select" id="zendure-selector"><option value="auto">${this._t('loading')}</option></select>
-          </div>
-        ` : ''}
-
-        ${this.config.show_tempo ? `
-          <div class="tempo-container" id="tempo-container">
-            ${this.config.tempo_today_entity ? `<div class="tempo-day" style="justify-content:flex-end"><span style="font-size:0.7em;opacity:0.6;text-transform:uppercase">${this._t('today')}</span><div class="tempo-indicator" id="tempo-today-indicator"></div></div>` : ''}
-            ${this.config.tempo_tomorrow_entity ? `<div class="tempo-day"><div class="tempo-indicator" id="tempo-tomorrow-indicator"></div><span style="font-size:0.7em;opacity:0.6;text-transform:uppercase">${this._t('tomorrow')}</span></div>` : ''}
-          </div>
-        ` : ''}
       </ha-card>
     `;
 
@@ -946,6 +979,8 @@ class EnergyOrbitCardEditor extends EnergyOrbitCardBase {
           { name: 'show_ring_labels', selector: { boolean: {} } },
           { name: 'enable_breathing', selector: { boolean: {} } },
           { name: 'gauge_opacity', selector: { number: { min: 0, max: 1, step: 0.05, mode: 'slider' } } },
+          { name: 'padding_top', selector: { number: { min: 0, max: 100, step: 1, unit_of_measurement: 'px' } } },
+          { name: 'padding_bottom', selector: { number: { min: 0, max: 100, step: 1, unit_of_measurement: 'px' } } },
         ]
       }
     ];
@@ -989,6 +1024,8 @@ class EnergyOrbitCardEditor extends EnergyOrbitCardBase {
         show_ring_labels: this._t('editor_show_ring_labels'),
         enable_breathing: this._t('editor_enable_breathing'),
         gauge_opacity: this._t('editor_gauge_opacity'),
+        padding_top: this._t('editor_padding_top'),
+        padding_bottom: this._t('editor_padding_bottom'),
       };
       return labels[schema.name] || schema.name;
     };
