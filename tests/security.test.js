@@ -60,8 +60,8 @@ test('Security: zendureSelect options safety', async (t) => {
     appendChild: (child) => optionsCreated.push(child),
     addEventListener: () => {}
   };
-  card.shadowRoot = {
-    getElementById: (id) => id === 'zendure-selector' ? mockSelect : null
+  card._elements = {
+    'zendure-selector': mockSelect
   };
 
   // Malicious translation

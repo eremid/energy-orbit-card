@@ -151,6 +151,7 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
     this._updating = false;
     this._batteryMode = 'percent'; 
     this._solarMode = 'total';
+    this._elements = {};
   }
 
   setConfig(config) {
@@ -326,6 +327,13 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
 
   _getMdiPath(icon) {
     return eocIcons[icon] || eocIcons['grid'];
+  }
+
+  _cacheElements() {
+    this._elements = {};
+    this.shadowRoot.querySelectorAll('[id]').forEach(el => {
+      this._elements[el.id] = el;
+    });
   }
 
   _render() {
@@ -574,15 +582,16 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
       </ha-card>
     `;
 
+    this._cacheElements();
     this._setupListeners();
     this._updateContent();
   }
 
   _setupListeners() {
-      this.shadowRoot.getElementById('battery-stat-item')?.addEventListener('click', () => this._toggleBatteryMode());
-      this.shadowRoot.getElementById('solar-stat-item')?.addEventListener('click', () => this._toggleSolarMode());
-      this.shadowRoot.getElementById('tempo-container')?.addEventListener('click', () => this._navigateToTempo());
-      const zendureSelect = this.shadowRoot.getElementById('zendure-selector');
+      this._elements['battery-stat-item']?.addEventListener('click', () => this._toggleBatteryMode());
+      this._elements['solar-stat-item']?.addEventListener('click', () => this._toggleSolarMode());
+      this._elements['tempo-container']?.addEventListener('click', () => this._navigateToTempo());
+      const zendureSelect = this._elements['zendure-selector'];
       if(zendureSelect) {
           const options = [
               {v: 'smart', l: 'Auto (Smart)'}, {v: 'manual', l: 'Manuel'},
@@ -621,8 +630,8 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
     const c = this.config.colors;
 
     // GRID
-    const gridStatEl = this.shadowRoot.getElementById('grid-stat');
-    const gridIconSvg = this.shadowRoot.getElementById('grid-icon');
+    const gridStatEl = this._elements['grid-stat'];
+    const gridIconSvg = this._elements['grid-icon'];
 
     if (gridStatEl) {
       const color = isInjection ? c.grid_export : c.grid_import;
@@ -633,11 +642,11 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
         gridIconSvg.style.fill = color;
       }
     }
-    const gridStatVal = this.shadowRoot.getElementById('grid-stat-value');
+    const gridStatVal = this._elements['grid-stat-value'];
     if(gridStatVal) gridStatVal.textContent = Math.round(gridAbs);
 
     // CENTER VALUE
-    const centerVal = this.shadowRoot.getElementById('center-value');
+    const centerVal = this._elements['center-value'];
     if(centerVal) {
         centerVal.textContent = Math.round(gridAbs);
         centerVal.className = 'grid-value';
@@ -649,7 +658,7 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
     }
 
     // BATTERY
-    const batLabelEl = this.shadowRoot.getElementById('battery-label');
+    const batLabelEl = this._elements['battery-label'];
     if (batLabelEl) batLabelEl.textContent = this._getBatteryOperationLabel();
 
     let isCharging = false;
@@ -660,16 +669,18 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
         isCharging = batteryPower > 0;
     }
 
-    const batStatItem = this.shadowRoot.getElementById('battery-stat-item');
-    const batIconWrapper = this.shadowRoot.getElementById('battery-icon-wrapper');
-    const batIconSvg = this.shadowRoot.getElementById('battery-icon-svg');
+    const batStatItem = this._elements['battery-stat-item'];
+    const batIconWrapper = this._elements['battery-icon-wrapper'];
+    const batIconSvg = this._elements['battery-icon-svg'];
 
-    if (this.config.enable_breathing && Math.abs(batteryPower) > 50) {
+    if (batIconWrapper) {
+      if (this.config.enable_breathing && Math.abs(batteryPower) > 50) {
         batIconWrapper.classList.add('breathing');
         const intensity = Math.min(0.8, Math.max(0.2, Math.abs(batteryPower) / batteryPowerMax));
         batIconWrapper.style.setProperty('--halo-intensity', intensity);
-    } else {
+      } else {
         batIconWrapper.classList.remove('breathing');
+      }
     }
 
     // Determine Battery Colors
@@ -688,8 +699,8 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
     }
     if (batIconSvg) batIconSvg.setAttribute('fill', bColor);
 
-    const batValEl = this.shadowRoot.getElementById('battery-value');
-    const batUnitEl = this.shadowRoot.getElementById('battery-unit');
+    const batValEl = this._elements['battery-value'];
+    const batUnitEl = this._elements['battery-unit'];
     if(batValEl) {
         if(this._batteryMode === 'power' || this._batteryMode === 'minimal') {
             batValEl.textContent = Math.abs(batteryPower).toFixed(0);
@@ -700,7 +711,7 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
         }
     }
 
-    const batAutoEl = this.shadowRoot.getElementById('battery-autonomy');
+    const batAutoEl = this._elements['battery-autonomy'];
     if (batAutoEl) {
         if (this._batteryMode === 'percent') {
             if (this.config.battery_capacity_wh && Math.abs(batteryPower) > 10) {
@@ -742,19 +753,21 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
     if(batIcon) batIcon.setAttribute('d', isCharging ? this._getMdiPath('battery-charging') : this._getMdiPath('battery'));
 
     // SOLAR
-    const solValEl = this.shadowRoot.getElementById('solar-value');
+    const solValEl = this._elements['solar-value'];
     if(solValEl) solValEl.textContent = solar.toFixed(0);
 
-    const solarIconWrapper = this.shadowRoot.getElementById('solar-icon-wrapper');
-    if (this.config.enable_breathing && solar > 50) {
+    const solarIconWrapper = this._elements['solar-icon-wrapper'];
+    if (solarIconWrapper) {
+      if (this.config.enable_breathing && solar > 50) {
         solarIconWrapper.classList.add('breathing');
         const intensity = Math.min(0.8, Math.max(0.2, solar / this.config.solar_max));
         solarIconWrapper.style.setProperty('--halo-intensity', intensity);
-    } else {
+      } else {
         solarIconWrapper.classList.remove('breathing');
+      }
     }
 
-    const solDetCont = this.shadowRoot.getElementById('solar-details-container');
+    const solDetCont = this._elements['solar-details-container'];
     if(solDetCont) {
         if (this._solarMode === 'detail') {
             solDetCont.style.display = 'block'; 
@@ -794,7 +807,7 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
     // DYNAMIC LABELS
     if (this.config.show_ring_labels) {
         const updateLabel = (id, text, isNegativeFlow) => {
-            const el = this.shadowRoot.getElementById(id);
+            const el = this._elements[id];
             if (!el) return;
             const tp = el.querySelector('textPath');
             if (tp) tp.textContent = text;
@@ -828,15 +841,15 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
         return '#666666';
     };
     if(this.config.show_tempo) {
-        const t1 = this.shadowRoot.getElementById('tempo-today-indicator');
+        const t1 = this._elements['tempo-today-indicator'];
         if(t1) t1.style.backgroundColor = getTempoColor(this._getEntityState(this.config.tempo_today_entity));
-        const t2 = this.shadowRoot.getElementById('tempo-tomorrow-indicator');
+        const t2 = this._elements['tempo-tomorrow-indicator'];
         if(t2) t2.style.backgroundColor = getTempoColor(this._getEntityState(this.config.tempo_tomorrow_entity));
     }
 
     if(this.config.show_zendure_mode && this.config.zendure_mode_entity) {
          const currentMode = this._getEntityState(this.config.zendure_mode_entity);
-         const sel = this.shadowRoot.getElementById('zendure-selector');
+         const sel = this._elements['zendure-selector'];
          if(sel && currentMode && sel.value !== currentMode) sel.value = currentMode;
     }
   }
@@ -870,7 +883,7 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
   }
 
   _updateGauge(id, percent, radius) {
-    const el = this.shadowRoot.getElementById(id);
+    const el = this._elements[id];
     if (!el) return;
     const C = 2 * Math.PI * radius;
     const offset = C * (1 - percent / 100);
@@ -880,7 +893,7 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
   }
 
   _updateBidirectionalGauge(id, value, max, radius, isNeg) {
-    const el = this.shadowRoot.getElementById(id);
+    const el = this._elements[id];
     if (!el) return;
     const abs = Math.abs(value);
     const C = 2 * Math.PI * radius;
