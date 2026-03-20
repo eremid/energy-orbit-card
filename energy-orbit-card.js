@@ -173,56 +173,36 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
   setConfig(config) {
     if (!config.grid_entity) throw new Error('Grid Entity required');
     
-    // Destructure deprecated fields out, keep the rest
-    const {
-      // Obsolete layout fields (removed in earlier refactors)
-      header_entities, header_settings, header_display,
-      battery_power_max_title, battery_power_max_entity_title, mobile_gauge_size,
-      // Legacy singular entity fields (migrated to plural arrays)
-      battery_entity, battery_power_entity, solar_entity,
-      // Legacy top-level color fields (migrated to colors object)
-      grid_import_color, grid_export_color, solar_color,
-      battery_color, battery_charge_color, battery_discharge_color,
-      // Everything else
-      ...rest
-    } = config;
-
-    // Migrate legacy singular entities → plural arrays
-    const batteryEntities = (rest.battery_entities?.length ? rest.battery_entities : battery_entity ? [battery_entity] : rest.battery_entities || []).filter(e => e !== null);
-    const batteryPowerEntities = (rest.battery_power_entities?.length ? rest.battery_power_entities : battery_power_entity ? [battery_power_entity] : rest.battery_power_entities || []).filter(e => e !== null);
-    const solarEntities = (rest.solar_entities?.length ? rest.solar_entities : solar_entity ? [solar_entity] : rest.solar_entities || []).filter(e => e !== null);
-
-    // Merge legacy top-level colors with nested colors object
     const colors = {
-      grid_import: this._sanitizeColor(grid_import_color || rest.colors?.grid_import, '#3498db'),
-      grid_export: this._sanitizeColor(grid_export_color || rest.colors?.grid_export, '#2ecc71'),
-      solar: this._sanitizeColor(solar_color || rest.colors?.solar, '#FFD700'),
-      battery: this._sanitizeColor(battery_color || rest.colors?.battery, '#FF6B35'),
-      battery_charge: this._sanitizeColor(battery_charge_color || rest.colors?.battery_charge, '#e74c3c'),
-      battery_discharge: this._sanitizeColor(battery_discharge_color || rest.colors?.battery_discharge, '#2ecc71'),
+      grid_import: this._sanitizeColor(config.colors?.grid_import, '#3498db'),
+      grid_export: this._sanitizeColor(config.colors?.grid_export, '#2ecc71'),
+      solar: this._sanitizeColor(config.colors?.solar, '#FFD700'),
+      battery: this._sanitizeColor(config.colors?.battery, '#FF6B35'),
+      battery_charge: this._sanitizeColor(config.colors?.battery_charge, '#e74c3c'),
+      battery_discharge: this._sanitizeColor(config.colors?.battery_discharge, '#2ecc71'),
     };
 
     this.config = {
-      ...rest,
-      battery_entities: batteryEntities,
-      battery_power_entities: batteryPowerEntities,
-      solar_entities: solarEntities,
-      battery_max: this._sanitizeNumber(rest.battery_max, 100),
-      solar_max: this._sanitizeNumber(rest.solar_max, 5000),
-      grid_max: this._sanitizeNumber(rest.grid_max, 6000),
-      battery_power_max: this._sanitizeNumber(rest.battery_power_max, 2400),
-      battery_power_max_entity: rest.battery_power_max_entity,
-      bidirectional_mode: (rest.bidirectional_mode === 'import_only' || rest.bidirectional_mode === 'export_only' || rest.bidirectional_mode === 'normal') ? 'normal' : 'bidirectional',
-      battery_capacity_wh: this._sanitizeNumber(rest.battery_capacity_wh, 1920),
-      grid_warning_threshold: this._sanitizeNumber(rest.grid_warning_threshold, 6000),
-      grid_alert_threshold: this._sanitizeNumber(rest.grid_alert_threshold, 9000),
-      show_zendure_mode: rest.show_zendure_mode !== false,
-      show_tempo: rest.show_tempo !== false,
-      show_ring_labels: rest.show_ring_labels === true,
-      gauge_opacity: this._sanitizeNumber(rest.gauge_opacity ?? 0.8, 0.8),
-      padding_top: this._sanitizeNumber(rest.padding_top ?? 16, 16),
-      padding_bottom: this._sanitizeNumber(rest.padding_bottom ?? 16, 16),
-      enable_breathing: rest.enable_breathing !== false,
+      ...config,
+      battery_entities: (config.battery_entities || []).filter(e => e !== null),
+      battery_power_entities: (config.battery_power_entities || []).filter(e => e !== null),
+      solar_entities: (config.solar_entities || []).filter(e => e !== null),
+      battery_max: this._sanitizeNumber(config.battery_max, 100),
+      solar_max: this._sanitizeNumber(config.solar_max, 5000),
+      grid_max: this._sanitizeNumber(config.grid_max, 6000),
+      battery_power_max: this._sanitizeNumber(config.battery_power_max, 2400),
+      battery_power_max_entity: config.battery_power_max_entity,
+      bidirectional_mode: (config.bidirectional_mode === 'import_only' || config.bidirectional_mode === 'export_only' || config.bidirectional_mode === 'normal') ? 'normal' : 'bidirectional',
+      battery_capacity_wh: this._sanitizeNumber(config.battery_capacity_wh, 1920),
+      grid_warning_threshold: this._sanitizeNumber(config.grid_warning_threshold, 6000),
+      grid_alert_threshold: this._sanitizeNumber(config.grid_alert_threshold, 9000),
+      show_zendure_mode: config.show_zendure_mode !== false,
+      show_tempo: config.show_tempo !== false,
+      show_ring_labels: config.show_ring_labels === true,
+      gauge_opacity: this._sanitizeNumber(config.gauge_opacity ?? 0.8, 0.8),
+      padding_top: this._sanitizeNumber(config.padding_top ?? 16, 16),
+      padding_bottom: this._sanitizeNumber(config.padding_bottom ?? 16, 16),
+      enable_breathing: config.enable_breathing !== false,
       colors
     };
     this._batteryMode = this._storageGet(this._getStorageKey('battery_mode', this.config.grid_entity), 'percent');
