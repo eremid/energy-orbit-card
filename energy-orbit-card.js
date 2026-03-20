@@ -25,7 +25,15 @@ const eocTranslations = {
     editor_padding_bottom: "Bottom Padding (px)",
     opt_bidirectional: "Dynamic (Two directions)", opt_normal: "Standard (Clockwise)",
     opt_percent: "Percent", opt_power: "Power", opt_total: "Total", opt_detail: "Detail",
-    header_entities: "Entities", header_settings: "Max Settings & Thresholds", header_display: "Display Options"
+    header_entities: "Entities", header_settings: "Max Settings & Thresholds", header_display: "Display Options",
+    header_colors: "Colors",
+    editor_color_grid_import: "Grid Import", editor_color_grid_export: "Grid Export",
+    editor_color_solar: "Solar", editor_color_battery: "Battery",
+    editor_color_battery_charge: "Battery Charging", editor_color_battery_discharge: "Battery Discharging",
+    editor_color_tempo_blue: "Tempo Blue", editor_color_tempo_white: "Tempo White", editor_color_tempo_red: "Tempo Red",
+    editor_color_theme: "Color Theme",
+    theme_default: "Default", theme_lavender: "Lavender", theme_candy: "Candy",
+    theme_neon: "Neon", theme_sunset: "Sunset", theme_nostromo: "Nostromo", theme_custom: "Custom"
   },
   fr: {
     network: "RÉSEAU", charging: "CHARGE", discharging: "DÉCHARGE", standby: "VEILLE",
@@ -52,7 +60,15 @@ const eocTranslations = {
     editor_padding_bottom: "Padding bas (px)",
     opt_bidirectional: "Dynamique (Deux sens)", opt_normal: "Standard (Sens horaire)",
     opt_percent: "Pourcentage", opt_power: "Puissance", opt_total: "Total", opt_detail: "Détail",
-    header_entities: "Entités", header_settings: "Réglages Max & Seuils", header_display: "Options d'affichage"
+    header_entities: "Entités", header_settings: "Réglages Max & Seuils", header_display: "Options d'affichage",
+    header_colors: "Couleurs",
+    editor_color_grid_import: "Import réseau", editor_color_grid_export: "Export réseau",
+    editor_color_solar: "Solaire", editor_color_battery: "Batterie",
+    editor_color_battery_charge: "Batterie en charge", editor_color_battery_discharge: "Batterie en décharge",
+    editor_color_tempo_blue: "Tempo Bleu", editor_color_tempo_white: "Tempo Blanc", editor_color_tempo_red: "Tempo Rouge",
+    editor_color_theme: "Thème de couleurs",
+    theme_default: "Par défaut", theme_lavender: "Lavande", theme_candy: "Candy",
+    theme_neon: "Néon", theme_sunset: "Coucher de soleil", theme_nostromo: "Nostromo", theme_custom: "Personnalisé"
   },
   es: {
     network: "RED", charging: "CARGANDO", discharging: "DESCARGANDO", standby: "ESPERA",
@@ -79,7 +95,15 @@ const eocTranslations = {
     editor_padding_bottom: "Margen inferior (px)",
     opt_bidirectional: "Dinámico (Dos sentidos)", opt_normal: "Estándar (Sentido horario)",
     opt_percent: "Porcentaje", opt_power: "Potencia", opt_total: "Total", opt_detail: "Detalle",
-    header_entities: "Entidades", header_settings: "Ajustes Máximos", header_display: "Opciones de Visualización"
+    header_entities: "Entidades", header_settings: "Ajustes Máximos", header_display: "Opciones de Visualización",
+    header_colors: "Colores",
+    editor_color_grid_import: "Importación red", editor_color_grid_export: "Exportación red",
+    editor_color_solar: "Solar", editor_color_battery: "Batería",
+    editor_color_battery_charge: "Batería cargando", editor_color_battery_discharge: "Batería descargando",
+    editor_color_tempo_blue: "Tempo Azul", editor_color_tempo_white: "Tempo Blanco", editor_color_tempo_red: "Tempo Rojo",
+    editor_color_theme: "Tema de colores",
+    theme_default: "Por defecto", theme_lavender: "Lavanda", theme_candy: "Candy",
+    theme_neon: "Neón", theme_sunset: "Atardecer", theme_nostromo: "Nostromo", theme_custom: "Personalizado"
   },
   de: {
     network: "NETZ", charging: "LÄDT", discharging: "ENTLÄDT", standby: "STANDBY",
@@ -106,7 +130,15 @@ const eocTranslations = {
     editor_padding_bottom: "Unterer Abstand (px)",
     opt_bidirectional: "Dynamisch (Zwei Richtungen)", opt_normal: "Standard (Im Uhrzeigersinn)",
     opt_percent: "Prozent", opt_power: "Leistung", opt_total: "Gesamt", opt_detail: "Detail",
-    header_entities: "Entitäten", header_settings: "Max-Einstellungen", header_display: "Anzeigeoptionen"
+    header_entities: "Entitäten", header_settings: "Max-Einstellungen", header_display: "Anzeigeoptionen",
+    header_colors: "Farben",
+    editor_color_grid_import: "Netz-Import", editor_color_grid_export: "Netz-Export",
+    editor_color_solar: "Solar", editor_color_battery: "Batterie",
+    editor_color_battery_charge: "Batterie laden", editor_color_battery_discharge: "Batterie entladen",
+    editor_color_tempo_blue: "Tempo Blau", editor_color_tempo_white: "Tempo Weiß", editor_color_tempo_red: "Tempo Rot",
+    editor_color_theme: "Farbthema",
+    theme_default: "Standard", theme_lavender: "Lavendel", theme_candy: "Candy",
+    theme_neon: "Neon", theme_sunset: "Sonnenuntergang", theme_nostromo: "Nostromo", theme_custom: "Benutzerdefiniert"
   }
 };
 
@@ -119,6 +151,39 @@ const eocIcons = {
   'zendure': 'M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z'
 };
 
+const eocDefaultColors = {
+  grid_import: '#3498db', grid_export: '#2ecc71', solar: '#FFD700',
+  battery: '#FF6B35', battery_charge: '#e74c3c', battery_discharge: '#2ecc71',
+  tempo_blue: '#4A90E2', tempo_white: '#E8E8E8', tempo_red: '#E74C3C'
+};
+const eocColorThemes = {
+  default: { ...eocDefaultColors },
+  lavender: {
+    grid_import: '#6367ff', grid_export: '#8494ff', solar: '#ffdbfd',
+    battery: '#c9beff', battery_charge: '#4e52cc', battery_discharge: '#ff8ef5',
+    tempo_blue: '#6367ff', tempo_white: '#e0d8ff', tempo_red: '#ff6b8a'
+  },
+  candy: {
+    grid_import: '#44acff', grid_export: '#89d4ff', solar: '#f9f6c4',
+    battery: '#fe9ec7', battery_charge: '#3388cc', battery_discharge: '#ff6ba8',
+    tempo_blue: '#44acff', tempo_white: '#f9f6c4', tempo_red: '#fe9ec7'
+  },
+  neon: {
+    grid_import: '#6aece1', grid_export: '#26ccc2', solar: '#fff57e',
+    battery: '#ffb76c', battery_charge: '#1fa89f', battery_discharge: '#ff8c3a',
+    tempo_blue: '#00e5ff', tempo_white: '#fff57e', tempo_red: '#ff4444'
+  },
+  sunset: {
+    grid_import: '#f26076', grid_export: '#458b73', solar: '#ffd150',
+    battery: '#ff9760', battery_charge: '#cc4d60', battery_discharge: '#5aab93',
+    tempo_blue: '#458b73', tempo_white: '#ffd150', tempo_red: '#f26076'
+  },
+  nostromo: {
+    grid_import: '#00ff41', grid_export: '#00e5ff', solar: '#ccaa00',
+    battery: '#ff8c00', battery_charge: '#b2ff59', battery_discharge: '#ff3333',
+    tempo_blue: '#00e5ff', tempo_white: '#b2ff59', tempo_red: '#ff3333'
+  }
+};
 const eocSafeColorPattern = /^[a-zA-Z0-9#(),. %_\-]+$/;
 const eocShorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
 const eocFullHexRegex = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
@@ -173,14 +238,10 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
   setConfig(config) {
     if (!config.grid_entity) throw new Error('Grid Entity required');
     
-    const colors = {
-      grid_import: this._sanitizeColor(config.colors?.grid_import, '#3498db'),
-      grid_export: this._sanitizeColor(config.colors?.grid_export, '#2ecc71'),
-      solar: this._sanitizeColor(config.colors?.solar, '#FFD700'),
-      battery: this._sanitizeColor(config.colors?.battery, '#FF6B35'),
-      battery_charge: this._sanitizeColor(config.colors?.battery_charge, '#e74c3c'),
-      battery_discharge: this._sanitizeColor(config.colors?.battery_discharge, '#2ecc71'),
-    };
+    const colors = {};
+    for (const [key, def] of Object.entries(eocDefaultColors)) {
+      colors[key] = this._sanitizeColor(config.colors?.[key], def);
+    }
 
     this.config = {
       ...config,
@@ -812,12 +873,13 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
     }
 
     // TEMPO
+    const tc = this.config.colors;
     const getTempoColor = (s) => {
         if(!s) return '#666666';
         const st = s.toLowerCase();
-        if(st.includes('bleu') || st.includes('blue')) return '#4A90E2';
-        if(st.includes('blanc') || st.includes('white')) return '#E8E8E8';
-        if(st.includes('rouge') || st.includes('red')) return '#E74C3C';
+        if(st.includes('bleu') || st.includes('blue')) return tc.tempo_blue;
+        if(st.includes('blanc') || st.includes('white')) return tc.tempo_white;
+        if(st.includes('rouge') || st.includes('red')) return tc.tempo_red;
         return '#666666';
     };
     if(this.config.show_tempo) {
@@ -915,6 +977,19 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
 class EnergyOrbitCardEditor extends EnergyOrbitCardBase {
   constructor() { super(); }
 
+  _hexToRgbArray(hex) {
+    if (typeof hex !== 'string') return undefined;
+    const result = eocFullHexRegex.exec(hex) || eocShorthandRegex.exec(hex);
+    if (!result) return undefined;
+    const f = result[0].length <= 4 ? (c) => parseInt(c + c, 16) : (c) => parseInt(c, 16);
+    return [f(result[1]), f(result[2]), f(result[3])];
+  }
+
+  _rgbArrayToHex(rgb) {
+    if (!Array.isArray(rgb) || rgb.length < 3) return undefined;
+    return '#' + rgb.slice(0, 3).map(c => Math.max(0, Math.min(255, Math.round(c))).toString(16).padStart(2, '0')).join('');
+  }
+
   setConfig(config) {
     this._config = config;
     this.render();
@@ -975,6 +1050,25 @@ class EnergyOrbitCardEditor extends EnergyOrbitCardBase {
           { name: 'padding_top', selector: { number: { min: 0, max: 100, step: 1, unit_of_measurement: 'px' } } },
           { name: 'padding_bottom', selector: { number: { min: 0, max: 100, step: 1, unit_of_measurement: 'px' } } },
         ]
+      },
+      {
+        type: 'expandable',
+        title: this._t('header_colors'),
+        schema: [
+          { name: 'color_theme', selector: { select: { options: [
+            ...Object.keys(eocColorThemes).map(k => ({ label: this._t(`theme_${k}`), value: k })),
+            { label: this._t('theme_custom'), value: 'custom' }
+          ] } } },
+          { name: 'color_grid_import', selector: { color_rgb: {} } },
+          { name: 'color_grid_export', selector: { color_rgb: {} } },
+          { name: 'color_solar', selector: { color_rgb: {} } },
+          { name: 'color_battery', selector: { color_rgb: {} } },
+          { name: 'color_battery_charge', selector: { color_rgb: {} } },
+          { name: 'color_battery_discharge', selector: { color_rgb: {} } },
+          { name: 'color_tempo_blue', selector: { color_rgb: {} } },
+          { name: 'color_tempo_white', selector: { color_rgb: {} } },
+          { name: 'color_tempo_red', selector: { color_rgb: {} } },
+        ]
       }
     ];
   }
@@ -985,8 +1079,28 @@ class EnergyOrbitCardEditor extends EnergyOrbitCardBase {
       this.innerHTML = '';
       this.form = document.createElement('ha-form');
       this.form.addEventListener('value-changed', (ev) => {
+        const val = ev.detail.value;
+        const colorKeys = Object.keys(eocDefaultColors).map(k => `color_${k}`);
+        const rest = {};
+        let color_theme;
+        for (const [k, v] of Object.entries(val)) {
+          if (k === 'color_theme') color_theme = v;
+          else if (!colorKeys.includes(k)) rest[k] = v;
+        }
+        let colors;
+        const selectedTheme = color_theme || 'default';
+        if (selectedTheme !== 'custom' && eocColorThemes[selectedTheme] &&
+            selectedTheme !== (this._config.color_theme || 'default')) {
+          colors = { ...eocColorThemes[selectedTheme] };
+        } else {
+          colors = { ...this._config.colors };
+          for (const key of Object.keys(eocDefaultColors)) {
+            const val = ev.detail.value[`color_${key}`];
+            if (val !== undefined) colors[key] = this._rgbArrayToHex(val) || colors[key];
+          }
+        }
         this.dispatchEvent(new CustomEvent('config-changed', {
-          detail: { config: { ...this._config, ...ev.detail.value } },
+          detail: { config: { ...this._config, ...rest, color_theme: selectedTheme, colors } },
           bubbles: true,
           composed: true,
         }));
@@ -1019,11 +1133,26 @@ class EnergyOrbitCardEditor extends EnergyOrbitCardBase {
         gauge_opacity: this._t('editor_gauge_opacity'),
         padding_top: this._t('editor_padding_top'),
         padding_bottom: this._t('editor_padding_bottom'),
+        color_grid_import: this._t('editor_color_grid_import'),
+        color_grid_export: this._t('editor_color_grid_export'),
+        color_solar: this._t('editor_color_solar'),
+        color_battery: this._t('editor_color_battery'),
+        color_battery_charge: this._t('editor_color_battery_charge'),
+        color_battery_discharge: this._t('editor_color_battery_discharge'),
+        color_tempo_blue: this._t('editor_color_tempo_blue'),
+        color_tempo_white: this._t('editor_color_tempo_white'),
+        color_tempo_red: this._t('editor_color_tempo_red'),
+        color_theme: this._t('editor_color_theme'),
       };
       return labels[schema.name] || schema.name;
     };
     this.form.hass = this._hass;
-    this.form.data = this._config;
+    const c = this._config.colors || {};
+    const formData = { ...this._config, color_theme: this._config.color_theme || 'default' };
+    for (const [key, def] of Object.entries(eocDefaultColors)) {
+      formData[`color_${key}`] = this._hexToRgbArray(c[key] || def);
+    }
+    this.form.data = formData;
   }
 }
 
