@@ -153,6 +153,49 @@ test('_getEntityValue and _getEntityState', async (t) => {
   });
 });
 
+test('_getEntityFriendlyName', async (t) => {
+  const card = new EnergyOrbitCard();
+  card.setConfig({ grid_entity: 'sensor.grid' });
+
+  await t.test('should return entityId if _hass is missing', () => {
+    card._hass = null;
+    assert.strictEqual(card._getEntityFriendlyName('sensor.test'), 'sensor.test');
+  });
+
+  await t.test('should return entityId if entityId is missing', () => {
+    card._hass = { states: {} };
+    assert.strictEqual(card._getEntityFriendlyName(null), null);
+    assert.strictEqual(card._getEntityFriendlyName(''), '');
+  });
+
+  await t.test('should return friendly_name if it exists', () => {
+    card._hass = {
+      states: {
+        'sensor.test': {
+          attributes: { friendly_name: 'Test Sensor' }
+        }
+      }
+    };
+    assert.strictEqual(card._getEntityFriendlyName('sensor.test'), 'Test Sensor');
+  });
+
+  await t.test('should return entityId if friendly_name is missing', () => {
+    card._hass = {
+      states: {
+        'sensor.test': {
+          attributes: {}
+        }
+      }
+    };
+    assert.strictEqual(card._getEntityFriendlyName('sensor.test'), 'sensor.test');
+  });
+
+  await t.test('should return entityId if entity is not in states', () => {
+    card._hass = { states: {} };
+    assert.strictEqual(card._getEntityFriendlyName('sensor.missing'), 'sensor.missing');
+  });
+});
+
 test('_getStorageKey', async (t) => {
   const card = new EnergyOrbitCard();
   card.setConfig({ grid_entity: 'sensor.my_grid_power' });
