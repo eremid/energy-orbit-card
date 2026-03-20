@@ -814,7 +814,7 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
             solDetCont.style.display = 'block'; 
             const ents = this.config.solar_entities;
 
-            solDetCont.innerHTML = '';
+            const frag = document.createDocumentFragment();
             ents.forEach(e => {
                 let n = this._getEntityFriendlyName(e).replace(eocSolarProductionRegex, '').trim();
                 if(n.length > 15) n = n.substring(0,15)+'.';
@@ -831,8 +831,10 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
                 valueSpan.appendChild(unitSpan);
                 row.appendChild(nameSpan);
                 row.appendChild(valueSpan);
-                solDetCont.appendChild(row);
+                frag.appendChild(row);
             });
+            solDetCont.innerHTML = '';
+            solDetCont.appendChild(frag);
         } else {
             solDetCont.style.display = 'none';
         }
