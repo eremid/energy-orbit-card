@@ -47,11 +47,11 @@ const script = new vm.Script(code + '\nEnergyOrbitCard;');
 const EnergyOrbitCard = script.runInContext(sandbox);
 
 test('_getBatteryLevel aggregation', async (t) => {
-  await t.test('should return value from single battery_entity', () => {
+  await t.test('should return value from single battery entity', () => {
     const card = new EnergyOrbitCard();
     card.setConfig({
       grid_entity: 'sensor.grid',
-      battery_entity: 'sensor.battery'
+      battery_entities: ['sensor.battery']
     });
     card._hass = {
       states: {
@@ -87,11 +87,11 @@ test('_getBatteryLevel aggregation', async (t) => {
 });
 
 test('_getBatteryPower aggregation', async (t) => {
-  await t.test('should return value from single battery_power_entity', () => {
+  await t.test('should return value from single battery_power entity', () => {
     const card = new EnergyOrbitCard();
     card.setConfig({
       grid_entity: 'sensor.grid',
-      battery_power_entity: 'sensor.battery_power'
+      battery_power_entities: ['sensor.battery_power']
     });
     card._hass = {
       states: {
@@ -133,11 +133,11 @@ test('_getBatteryPower aggregation', async (t) => {
 });
 
 test('_getSolarProduction aggregation', async (t) => {
-  await t.test('should return value from single solar_entity', () => {
+  await t.test('should return value from single solar entity', () => {
     const card = new EnergyOrbitCard();
     card.setConfig({
       grid_entity: 'sensor.grid',
-      solar_entity: 'sensor.solar'
+      solar_entities: ['sensor.solar']
     });
     card._hass = {
       states: {
