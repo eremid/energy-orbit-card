@@ -129,6 +129,22 @@ class EnergyOrbitCardBase extends HTMLElement {
     const t = eocTranslations[lang] || eocTranslations['en'];
     return t[key] || eocTranslations['en'][key] || key;
   }
+
+  _storageGet(key, fallback) {
+    try {
+      return localStorage.getItem(key) ?? fallback;
+    } catch (e) {
+      return fallback;
+    }
+  }
+
+  _storageSet(key, value) {
+    try {
+      localStorage.setItem(key, value);
+    } catch (e) {
+      // Fail silently if localStorage is inaccessible
+    }
+  }
 }
 
 class EnergyOrbitCard extends EnergyOrbitCardBase {
@@ -224,8 +240,8 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
       enable_breathing: cleanConfig.enable_breathing !== false,
       colors
     };
-    this._batteryMode = localStorage.getItem(this._getStorageKey('battery_mode', this.config.grid_entity)) || 'percent';
-    this._solarMode = localStorage.getItem(this._getStorageKey('solar_mode', this.config.grid_entity)) || 'total';
+    this._batteryMode = this._storageGet(this._getStorageKey('battery_mode', this.config.grid_entity), 'percent');
+    this._solarMode = this._storageGet(this._getStorageKey('solar_mode', this.config.grid_entity), 'total');
   }
 
   _getStorageKey(suffix, gridEntity) {
@@ -254,13 +270,13 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
     else if (this._batteryMode === 'power') this._batteryMode = 'minimal';
     else this._batteryMode = 'percent';
     
-    localStorage.setItem(this._getStorageKey('battery_mode'), this._batteryMode);
+    this._storageSet(this._getStorageKey('battery_mode'), this._batteryMode);
     this._updateContent();
   }
 
   _toggleSolarMode() {
     this._solarMode = this._solarMode === 'total' ? 'detail' : 'total';
-    localStorage.setItem(this._getStorageKey('solar_mode'), this._solarMode);
+    this._storageSet(this._getStorageKey('solar_mode'), this._solarMode);
     this._updateContent();
   }
 
