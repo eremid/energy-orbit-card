@@ -7,7 +7,7 @@
 A custom Lovelace card for Home Assistant to monitor your home energy flows through animated concentric rings.
 Designed for setups with solar panels, a home battery (perfect for Zendure) and a grid connection (EDF Tempo supported).
 
-![Energy Orbit Card Charge Mode](https://raw.githubusercontent.com/eremid/energy-orbit-card/main/charge-mode.png)
+![Energy Orbit Card](https://raw.githubusercontent.com/eremid/energy-orbit-card/main/energy-orbit-card.png)
 
 ## ✨ Features
 
@@ -15,7 +15,8 @@ Designed for setups with solar panels, a home battery (perfect for Zendure) and 
 - 🏷️ **Dynamic Labels** — Integrated labels directly inside the rings showing current state (IMPORT, EXPORT, CHARGING, DISCHARGING).
 - 🔄 **Smart Directions** — All gauges start at the top (12 o'clock). Positive flows (Import, Discharge, Production) go clockwise, while negative flows (Export, Charge) go counter-clockwise.
 - 🌍 **Automatic i18n** — Detects your Home Assistant profile language automatically (English, French, Spanish, German).
-- ⚙️ **Visual UI Editor** — Configure all entities, max values, thresholds and options directly from the Lovelace card editor. No YAML needed.
+- ⚙️ **Visual UI Editor** — Configure all entities, max values, thresholds, colors and options directly from the Lovelace card editor. No YAML needed.
+- 🎨 **Color Themes** — Choose from built-in color themes (Default, Lavender, Candy, Neon, Sunset, Nostromo) or customize individual orbit colors with a color picker. Each theme includes Tempo mode color variants.
 - 🌓 **Theme-aware** — Borders, shadows and text colors adapt natively to your dashboard Light or Dark theme.
 - 🔋 **Zendure Support** — Includes a built-in dropdown to switch your Zendure battery mode (Priority Charge, Priority Discharge, etc.) directly from the card.
 - 🔴 **EDF Tempo Color** — Displays the current day Tempo color (Blue, White, Red) as an indicator.
@@ -33,12 +34,6 @@ All rings start at the **top (12 o'clock)** for a cleaner, unified look.
 | **Middle 1** | Grid Power (W) | Clockwise (Import) / Counter-Clockwise (Export) | IMPORT / EXPORT |
 | **Middle 2** | Battery Power (W) | Clockwise (Discharge) / Counter-Clockwise (Charge) | DISCHARGING / CHARGING |
 | **Inner** | Solar Power (W) | Clockwise | PRODUCTION |
-
-![Energy Orbit Card Discharge Mode](https://raw.githubusercontent.com/eremid/energy-orbit-card/main/discharge-mode.png)
-*Example: Card in Discharge mode (Battery power flowing clockwise).*
-
-![Energy Orbit Card Charge Mode](https://raw.githubusercontent.com/eremid/energy-orbit-card/main/charge-mode.png)
-*Example: Card in Charge mode (Battery power flowing counter-clockwise).*
 
 ## 📦 Installation
 
@@ -101,6 +96,19 @@ tempo_tomorrow_entity: sensor.rte_tempo_next_color
 show_zendure_mode: true
 show_tempo: true
 
+# --- Colors ---
+colors:
+  color_theme: nostromo                   # default | lavender | candy | neon | sunset | nostromo
+  grid_import: '#00ff41'                  # Override individual colors (hex)
+  grid_export: '#00e5ff'
+  solar: '#ccaa00'
+  battery: '#ff8c00'
+  battery_charge: '#b2ff59'
+  battery_discharge: '#ff3333'
+  tempo_blue: '#00e5ff'                   # Tempo mode colors per theme
+  tempo_white: '#b2ff59'
+  tempo_red: '#ff3333'
+
 # --- Display Options ---
 bidirectional_mode: bidirectional         # bidirectional | normal
 enable_breathing: true
@@ -134,6 +142,38 @@ show_ring_labels: true
 | `enable_breathing` | `true` | Enable the subtle breathing animation. |
 | `gauge_opacity` | `0.8` | Opacity of orbit tracks (0 to 1). |
 | `show_ring_labels` | `false` | Show text labels inside the orbit rings. |
+
+### Color Options
+
+Colors are configured under the `colors` key. You can select a theme preset or override individual colors.
+
+| Option | Default | Description |
+|---|---|---|
+| `colors.color_theme` | `default` | Color theme preset: `default`, `lavender`, `candy`, `neon`, `sunset`, `nostromo`. |
+| `colors.grid_import` | `#3498db` | Grid import orbit color. |
+| `colors.grid_export` | `#2ecc71` | Grid export orbit color. |
+| `colors.solar` | `#FFD700` | Solar production orbit color. |
+| `colors.battery` | `#FF6B35` | Battery level orbit color. |
+| `colors.battery_charge` | `#e74c3c` | Battery charging orbit color. |
+| `colors.battery_discharge` | `#2ecc71` | Battery discharging orbit color. |
+| `colors.tempo_blue` | `#3498db` | Tempo Blue day color (overrides theme). |
+| `colors.tempo_white` | `#ecf0f1` | Tempo White day color (overrides theme). |
+| `colors.tempo_red` | `#e74c3c` | Tempo Red day color (overrides theme). |
+
+When a color theme is selected, it applies all colors at once. You can then override individual colors — the theme switches to "Custom" automatically. Use the visual editor's reset buttons to restore defaults.
+
+### Available Color Themes
+
+| Theme | Style |
+|---|---|
+| **Default** | Classic blue/green/gold palette |
+| **Lavender** | Soft purple and pink tones |
+| **Candy** | Pastel blue, yellow and pink |
+| **Neon** | Vibrant cyan, yellow and orange |
+| **Sunset** | Warm coral, amber and teal |
+| **Nostromo** | Retro terminal green and amber |
+
+Each theme includes matching Tempo mode color variants (blue, white, red) that stay recognizable while fitting the theme aesthetic.
 
 ## 🌍 Supported Languages
 
