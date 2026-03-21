@@ -1,5 +1,27 @@
 # Changelog
 
+## [2.1.0](https://github.com/eremid/energy-orbit-card/compare/v2.0.0...v2.1.0) (2026-03-21)
+
+
+### Features
+
+* add color themes and color picker to visual editor ([cb01a0e](https://github.com/eremid/energy-orbit-card/commit/cb01a0e857d205d378da26ae892951bea2d5790f))
+
+
+### Bug Fixes
+
+* ensure visual symmetry and prevent bottom clipping with optional bars ([1bb3c2a](https://github.com/eremid/energy-orbit-card/commit/1bb3c2a61bfa70c6fcd866159782b6a76483004e))
+* handle localStorage exceptions by wrapping access in try-catch ([1ecd4fc](https://github.com/eremid/energy-orbit-card/commit/1ecd4fc9af44b9da22c02e5ccbed61a70af55f4b))
+* prevent potential XSS in zendure mode selector ([6e8a722](https://github.com/eremid/energy-orbit-card/commit/6e8a72261e7c1fe0963293135567874e1879c79c))
+
+
+### Performance Improvements
+
+* cache DOM elements in _elements object ([bde91c7](https://github.com/eremid/energy-orbit-card/commit/bde91c70cebe3638d11ac34679f0ab380fbae873))
+* hoist solar production regex outside loop ([4209861](https://github.com/eremid/energy-orbit-card/commit/4209861ad389c463ebf5549272fc24e7ff15be00))
+* optimize hex color conversion and sanitize color regex ([d19a65f](https://github.com/eremid/energy-orbit-card/commit/d19a65f507c7294ebba09499a0d769aeed5bb2bb))
+* use DocumentFragment for solar detail rows ([7deace5](https://github.com/eremid/energy-orbit-card/commit/7deace5be255d4af2efe0fcb494da8a5be764415))
+
 ## [2.0.0](https://github.com/eremid/energy-orbit-card/compare/v1.0.0...v2.0.0) (2026-03-02)
 
 
