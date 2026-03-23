@@ -268,6 +268,15 @@ class EnergyOrbitCard extends EnergyOrbitCardBase {
     };
     this._batteryMode = this._storageGet(this._getStorageKey('battery_mode', this.config.grid_entity), 'percent');
     this._solarMode = this._storageGet(this._getStorageKey('solar_mode', this.config.grid_entity), 'total');
+    if (this._rendered) {
+      this._rendered = false;
+      this._elements = {};
+      if (this._hass) {
+        this._render();
+        this._rendered = true;
+        this._updateContent();
+      }
+    }
   }
 
   _getStorageKey(suffix, gridEntity) {
